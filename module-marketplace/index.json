@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "updated": "2026-11-11",
-  "updatedAt": "2026-11-11T15:04:56Z",
+  "updatedAt": "2026-11-11T15:07:21Z",
   "modules": [
     {
       "id": "announcements",
@@ -288,7 +288,7 @@
       "icon": "FileText",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T15:04:56Z",
+      "updatedAt": "2026-11-11T15:07:21Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -371,7 +371,7 @@
       "icon": "Newspaper",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T15:04:56Z",
+      "updatedAt": "2026-11-11T15:07:21Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -1005,7 +1005,7 @@
       "icon": "Coins",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T15:04:06Z",
+      "updatedAt": "2026-11-11T15:07:21Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -2162,7 +2162,7 @@
       "icon": "MessageSquare",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T15:04:56Z",
+      "updatedAt": "2026-11-11T15:07:21Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -2241,13 +2241,13 @@
           "description": "让游戏服务器自行连接到本站：重启后依然保留的发货队列、实时状态、游戏内商店与积分，以及账户绑定，适用于任何有客户端的游戏"
         }
       },
-      "version": "1.1.0",
+      "version": "1.2.0",
       "coreVersion": "^5.26.0",
       "author": "Blysis",
       "icon": "Cable",
       "category": "gaming",
       "verified": true,
-      "updatedAt": "2026-10-25T09:40:22Z",
+      "updatedAt": "2026-11-11T14:47:07Z",
       "screenshots": [],
       "tags": [
         "gaming"
@@ -2281,6 +2281,7 @@
           "store.credits.purchased",
           "store.gift.sent",
           "game-account.resolve",
+          "profile.linkedAccounts",
           "store.orders.delivery"
         ]
       },
@@ -3039,7 +3040,7 @@
       "icon": "Trophy",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T15:04:56Z",
+      "updatedAt": "2026-11-11T15:07:21Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -3746,7 +3747,7 @@
       "icon": "UserRound",
       "category": "integration",
       "verified": true,
-      "updatedAt": "2026-11-11T15:04:56Z",
+      "updatedAt": "2026-11-11T15:07:21Z",
       "screenshots": [],
       "tags": [
         "minecraft",
@@ -3822,7 +3823,7 @@
       "icon": "Gavel",
       "category": "gaming",
       "verified": true,
-      "updatedAt": "2026-11-11T15:04:56Z",
+      "updatedAt": "2026-11-11T15:07:21Z",
       "screenshots": [],
       "tags": [
         "gaming"
@@ -4392,7 +4393,7 @@
       "icon": "FileText",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T15:04:56Z",
+      "updatedAt": "2026-11-11T15:07:21Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -5272,7 +5273,7 @@
       "icon": "UserPlus",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T15:04:56Z",
+      "updatedAt": "2026-11-11T15:07:21Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -5963,7 +5964,7 @@
       "icon": "Users",
       "category": "management",
       "verified": true,
-      "updatedAt": "2026-11-11T15:04:56Z",
+      "updatedAt": "2026-11-11T15:07:21Z",
       "screenshots": [],
       "tags": [
         "management"
@@ -6113,7 +6114,7 @@
       "icon": "ShoppingBag",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T15:04:56Z",
+      "updatedAt": "2026-11-11T15:07:21Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -6475,7 +6476,7 @@
       "icon": "Percent",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T15:04:56Z",
+      "updatedAt": "2026-11-11T15:07:21Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -6557,7 +6558,7 @@
       "icon": "Ticket",
       "category": "management",
       "verified": true,
-      "updatedAt": "2026-11-11T15:04:56Z",
+      "updatedAt": "2026-11-11T15:07:21Z",
       "screenshots": [],
       "tags": [
         "management"
