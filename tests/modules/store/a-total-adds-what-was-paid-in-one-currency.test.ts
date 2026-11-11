@@ -114,7 +114,8 @@ vi.mock("@/core/sdk/server", () => ({
     log: { error: vi.fn(), warn: vi.fn(), info: vi.fn(), debug: vi.fn() },
 }));
 
-vi.mock("@/core/sdk", () => ({
+vi.mock("@/core/sdk", async () => ({
+    textFor: (await vi.importActual<typeof import("@/core/lib/i18n/translatable-text")>("@/core/lib/i18n/translatable-text")).textFor,
     // What the currency module answers: rates kept against one base, crossed.
     applyFiltersAsync: vi.fn(async (hook: string, value: unknown, context: { from: string; to: string }) => {
         if (hook !== "currency.rate") return value;
