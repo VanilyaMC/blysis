@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "updated": "2026-11-11",
-  "updatedAt": "2026-11-11T16:33:58Z",
+  "updatedAt": "2026-11-11T16:55:00Z",
   "modules": [
     {
       "id": "announcements",
@@ -288,7 +288,7 @@
       "icon": "FileText",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T16:33:58Z",
+      "updatedAt": "2026-11-11T16:55:00Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -371,7 +371,7 @@
       "icon": "Newspaper",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T16:33:58Z",
+      "updatedAt": "2026-11-11T16:55:00Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -1005,7 +1005,7 @@
       "icon": "Coins",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T16:33:58Z",
+      "updatedAt": "2026-11-11T16:55:00Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -1238,13 +1238,13 @@
           "description": "支持多货币并自动换算"
         }
       },
-      "version": "1.8.0",
-      "coreVersion": "^5.0.0",
+      "version": "1.9.0",
+      "coreVersion": "^5.33.0",
       "author": "Blysis",
       "icon": "DollarSign",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T16:33:58Z",
+      "updatedAt": "2026-11-11T16:47:54Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -1476,7 +1476,7 @@
       "icon": "MessageSquare",
       "category": "integration",
       "verified": true,
-      "updatedAt": "2026-11-11T16:33:31Z",
+      "updatedAt": "2026-11-11T16:55:00Z",
       "screenshots": [],
       "tags": [
         "integration"
@@ -2162,7 +2162,7 @@
       "icon": "MessageSquare",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T16:33:58Z",
+      "updatedAt": "2026-11-11T16:55:00Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -2247,7 +2247,7 @@
       "icon": "Cable",
       "category": "gaming",
       "verified": true,
-      "updatedAt": "2026-11-11T16:33:58Z",
+      "updatedAt": "2026-11-11T16:55:00Z",
       "screenshots": [],
       "tags": [
         "gaming"
@@ -3040,7 +3040,7 @@
       "icon": "Trophy",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T16:33:58Z",
+      "updatedAt": "2026-11-11T16:55:00Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -3747,7 +3747,7 @@
       "icon": "UserRound",
       "category": "integration",
       "verified": true,
-      "updatedAt": "2026-11-11T16:33:58Z",
+      "updatedAt": "2026-11-11T16:55:00Z",
       "screenshots": [],
       "tags": [
         "minecraft",
@@ -3823,7 +3823,7 @@
       "icon": "Gavel",
       "category": "gaming",
       "verified": true,
-      "updatedAt": "2026-11-11T16:33:58Z",
+      "updatedAt": "2026-11-11T16:55:00Z",
       "screenshots": [],
       "tags": [
         "gaming"
@@ -4393,7 +4393,7 @@
       "icon": "FileText",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T16:33:58Z",
+      "updatedAt": "2026-11-11T16:55:00Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -5273,7 +5273,7 @@
       "icon": "UserPlus",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T16:33:58Z",
+      "updatedAt": "2026-11-11T16:55:00Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -5964,7 +5964,7 @@
       "icon": "Users",
       "category": "management",
       "verified": true,
-      "updatedAt": "2026-11-11T16:33:58Z",
+      "updatedAt": "2026-11-11T16:55:00Z",
       "screenshots": [],
       "tags": [
         "management"
@@ -6114,7 +6114,7 @@
       "icon": "ShoppingBag",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T16:33:58Z",
+      "updatedAt": "2026-11-11T16:55:00Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -6476,7 +6476,7 @@
       "icon": "Percent",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T16:33:58Z",
+      "updatedAt": "2026-11-11T16:55:00Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -6558,7 +6558,7 @@
       "icon": "Ticket",
       "category": "management",
       "verified": true,
-      "updatedAt": "2026-11-11T16:33:58Z",
+      "updatedAt": "2026-11-11T16:55:00Z",
       "screenshots": [],
       "tags": [
         "management"
