@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "updated": "2026-11-11",
-  "updatedAt": "2026-11-11T13:26:05Z",
+  "updatedAt": "2026-11-11T14:32:05Z",
   "modules": [
     {
       "id": "announcements",
@@ -288,7 +288,7 @@
       "icon": "FileText",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T12:27:07Z",
+      "updatedAt": "2026-11-11T14:32:05Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -371,7 +371,7 @@
       "icon": "Newspaper",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T13:26:05Z",
+      "updatedAt": "2026-11-11T14:32:05Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -2161,7 +2161,7 @@
       "icon": "MessageSquare",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T13:26:05Z",
+      "updatedAt": "2026-11-11T14:32:05Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -3038,7 +3038,7 @@
       "icon": "Trophy",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T13:26:05Z",
+      "updatedAt": "2026-11-11T14:32:05Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -3745,7 +3745,7 @@
       "icon": "UserRound",
       "category": "integration",
       "verified": true,
-      "updatedAt": "2026-11-11T13:26:05Z",
+      "updatedAt": "2026-11-11T14:32:05Z",
       "screenshots": [],
       "tags": [
         "minecraft",
@@ -3821,7 +3821,7 @@
       "icon": "Gavel",
       "category": "gaming",
       "verified": true,
-      "updatedAt": "2026-11-11T13:26:05Z",
+      "updatedAt": "2026-11-11T14:32:05Z",
       "screenshots": [],
       "tags": [
         "gaming"
@@ -4391,7 +4391,7 @@
       "icon": "FileText",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T12:27:07Z",
+      "updatedAt": "2026-11-11T14:32:05Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -5271,7 +5271,7 @@
       "icon": "UserPlus",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T13:26:05Z",
+      "updatedAt": "2026-11-11T14:32:05Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -5962,7 +5962,7 @@
       "icon": "Users",
       "category": "management",
       "verified": true,
-      "updatedAt": "2026-11-11T13:26:05Z",
+      "updatedAt": "2026-11-11T14:32:05Z",
       "screenshots": [],
       "tags": [
         "management"
@@ -6106,13 +6106,13 @@
           "description": "完整的电商功能，包括商品、分类、购物车和订单"
         }
       },
-      "version": "2.54.0",
+      "version": "2.54.1",
       "coreVersion": "^5.30.0",
       "author": "Blysis Team",
       "icon": "ShoppingBag",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T12:22:38Z",
+      "updatedAt": "2026-11-11T14:32:05Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -6474,7 +6474,7 @@
       "icon": "Percent",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T12:22:38Z",
+      "updatedAt": "2026-11-11T14:32:05Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -6556,7 +6556,7 @@
       "icon": "Ticket",
       "category": "management",
       "verified": true,
-      "updatedAt": "2026-11-11T13:26:05Z",
+      "updatedAt": "2026-11-11T14:32:05Z",
       "screenshots": [],
       "tags": [
         "management"
