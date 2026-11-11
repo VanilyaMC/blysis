@@ -19,6 +19,8 @@ import { ModuleLayoutComponents } from "@/core/components/layout/ModuleLayoutCom
 import { ServerSlot } from "@/core/components/ServerSlot";
 import { ModuleContextProviders } from "@/core/components/layout/ModuleContextProviders";
 import { SiteCurrencyProvider } from "@/core/components/currency/site-currency";
+import { SiteSettingsProvider } from "@/core/providers/site-settings-provider";
+import { readPublicSettings } from "@/core/lib/public-settings";
 import { ConfirmProvider } from "@/core/components/ui/confirm-dialog";
 import { PlaceholderProvider } from "@/core/components/placeholders/PlaceholderProvider";
 import { MemberFaceProvider } from "@/core/components/MemberFaceProvider";
@@ -116,6 +118,13 @@ export default async function RootLayout({
   // rewrites itself once the request lands.
   const session = await getSession();
 
+  // The settings any visitor may read, for the same reason: the navbar, the
+  // footer and every price are drawn from them. Read in the browser alone,
+  // the server sent the shipped name and USD and the browser hydrated with
+  // the operator's, which React logged as a mismatch on every page. Null on
+  // a database blip, and the browser fetches them as it used to.
+  const publicSettings = await readPublicSettings().catch(() => null);
+
   // The site placeholders a theme's text may name, as far as the cache has
   // them in a moment: a value that is not ready is asked for by the browser
   // after the page paints, rather than holding up every page for it.
@@ -188,6 +197,7 @@ export default async function RootLayout({
                 serverConfig={active.settings}
               >
                 <ModuleProvider moduleStates={moduleStates}>
+                <SiteSettingsProvider payload={publicSettings}>
                 <SiteCurrencyProvider>
                 <MemberFaceProvider rules={faceRules}>
                 <ModuleContextProviders>
@@ -222,6 +232,7 @@ export default async function RootLayout({
                 </ModuleContextProviders>
                 </MemberFaceProvider>
                 </SiteCurrencyProvider>
+                </SiteSettingsProvider>
                 </ModuleProvider>
               </AppThemeProvider>
             </PlaceholderProvider>
