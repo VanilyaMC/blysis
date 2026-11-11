@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "updated": "2026-11-11",
-  "updatedAt": "2026-11-11T14:32:05Z",
+  "updatedAt": "2026-11-11T15:04:56Z",
   "modules": [
     {
       "id": "announcements",
@@ -288,7 +288,7 @@
       "icon": "FileText",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T14:32:05Z",
+      "updatedAt": "2026-11-11T15:04:56Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -371,7 +371,7 @@
       "icon": "Newspaper",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T14:32:05Z",
+      "updatedAt": "2026-11-11T15:04:56Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -999,13 +999,13 @@
           "description": "为用户提供的虚拟货币钱包"
         }
       },
-      "version": "1.10.2",
+      "version": "1.10.3",
       "coreVersion": "^5.21.0",
       "author": "Blysis",
       "icon": "Coins",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-10-23T20:22:50Z",
+      "updatedAt": "2026-11-11T15:04:06Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -1015,6 +1015,7 @@
       "conflicts": [],
       "hooks": {
         "emits": [
+          "currency.rate",
           "credits.credit.added",
           "credits.award"
         ],
@@ -2161,7 +2162,7 @@
       "icon": "MessageSquare",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T14:32:05Z",
+      "updatedAt": "2026-11-11T15:04:56Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -3038,7 +3039,7 @@
       "icon": "Trophy",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T14:32:05Z",
+      "updatedAt": "2026-11-11T15:04:56Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -3745,7 +3746,7 @@
       "icon": "UserRound",
       "category": "integration",
       "verified": true,
-      "updatedAt": "2026-11-11T14:32:05Z",
+      "updatedAt": "2026-11-11T15:04:56Z",
       "screenshots": [],
       "tags": [
         "minecraft",
@@ -3821,7 +3822,7 @@
       "icon": "Gavel",
       "category": "gaming",
       "verified": true,
-      "updatedAt": "2026-11-11T14:32:05Z",
+      "updatedAt": "2026-11-11T15:04:56Z",
       "screenshots": [],
       "tags": [
         "gaming"
@@ -4391,7 +4392,7 @@
       "icon": "FileText",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T14:32:05Z",
+      "updatedAt": "2026-11-11T15:04:56Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -5271,7 +5272,7 @@
       "icon": "UserPlus",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T14:32:05Z",
+      "updatedAt": "2026-11-11T15:04:56Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -5962,7 +5963,7 @@
       "icon": "Users",
       "category": "management",
       "verified": true,
-      "updatedAt": "2026-11-11T14:32:05Z",
+      "updatedAt": "2026-11-11T15:04:56Z",
       "screenshots": [],
       "tags": [
         "management"
@@ -6106,13 +6107,13 @@
           "description": "完整的电商功能，包括商品、分类、购物车和订单"
         }
       },
-      "version": "2.54.1",
+      "version": "2.54.2",
       "coreVersion": "^5.30.0",
       "author": "Blysis Team",
       "icon": "ShoppingBag",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T14:32:05Z",
+      "updatedAt": "2026-11-11T15:04:56Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -6474,7 +6475,7 @@
       "icon": "Percent",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-11T14:32:05Z",
+      "updatedAt": "2026-11-11T15:04:56Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -6556,7 +6557,7 @@
       "icon": "Ticket",
       "category": "management",
       "verified": true,
-      "updatedAt": "2026-11-11T14:32:05Z",
+      "updatedAt": "2026-11-11T15:04:56Z",
       "screenshots": [],
       "tags": [
         "management"
