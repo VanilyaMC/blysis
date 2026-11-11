@@ -1,12 +1,13 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { serverConfig } from "@/core/config/server";
 import { ModuleFooterLinks } from "@/core/generated/module-registry";
 import { useSiteSettings } from "@/core/hooks/useSiteSettings";
 import { defaultFooterColumns, drawnFooterColumns, parseFooterColumns, parseHiddenLinks, type FooterColumnLink } from "@/core/lib/footer-columns";
 import { isEnabledIn } from "@/core/lib/module-enabled";
 import { useAllModules } from "@/core/providers/module-provider";
+import { useText } from "@/core/hooks/useText";
 
 /**
  * A setting with something in it. Each key is read as `settings.<key>` at the
@@ -56,13 +57,19 @@ export function useFooter(): FooterContent {
     const commonT = useTranslations("common");
     const navT = useTranslations("nav");
     const moduleStatus = useAllModules();
+    // The name, the about line and the copyright are the operator's prose,
+    // which may be written per language; read in the reader's before the
+    // "is anything there" test, which only a string can pass.
+    const text = useText();
+    const locale = useLocale();
     const { settings } = useSiteSettings();
 
     const enabledFooterLinks = ModuleFooterLinks.filter((fl) => isEnabledIn(moduleStatus, fl.module));
     // An install that has never saved a footer is drawn the default one: the
     // two columns it had, read out of the settings that still hold them, and
     // a column for each section its modules name.
-    const saved = parseFooterColumns(settings.footer_columns);
+    // Headings and labels the operator wrote per language, in the reader's.
+    const saved = parseFooterColumns(settings.footer_columns, locale);
     const columns = drawnFooterColumns(
         saved ?? defaultFooterColumns(settings.footer_quick_links, settings.footer_legal_links, enabledFooterLinks),
         enabledFooterLinks,
@@ -89,11 +96,11 @@ export function useFooter(): FooterContent {
     ].filter((link): link is FooterSocialLink => typeof link.href === "string" && link.href !== "");
 
     return {
-        siteName: filled(settings.site_name) ?? serverConfig.name,
-        about: filled(settings.footer_about_text) ?? filled(settings.site_description) ?? filled(serverConfig.description),
+        siteName: filled(text(settings.site_name)) ?? serverConfig.name,
+        about: filled(text(settings.footer_about_text)) ?? filled(text(settings.site_description)) ?? filled(serverConfig.description),
         email: filled(settings.site_email) ?? filled(serverConfig.email),
         social,
         columns,
-        copyright: filled(settings.footer_copyright),
+        copyright: filled(text(settings.footer_copyright)),
     };
 }

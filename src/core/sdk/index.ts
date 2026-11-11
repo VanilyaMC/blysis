@@ -64,6 +64,17 @@ export {
  * where there is not, and returns whether the text actually landed.
  */
 export { sharedJson, peekShared, invalidateShared } from "@/core/lib/shared-request";
+/**
+ * Text an operator wrote, once or per language: the reader's translation, or
+ * the original where their language has none.
+ */
+export { textFor, isTranslatableText, originalText, type TranslatableText, type TranslatedText } from "@/core/lib/i18n/translatable-text";
+/**
+ * A record's text kept as the original in its column and translations beside
+ * it: joined into the value `LocalizedTextInput` edits, and split back apart
+ * for the save.
+ */
+export { joinTranslations, splitTranslations, type LanguageTexts } from "@/core/lib/i18n/translatable-text";
 /** Site placeholders in text, `{servers.online}`: filled once and as text. */
 export { fillPlaceholderText, placeholderTokens, type PlaceholderValue } from "@/core/lib/placeholder-text";
 
