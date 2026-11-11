@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Prisma } from "@prisma/client";
 import { generateOrderNumber, applyFiltersAsync } from "@/core/sdk";
-import { log, logActivity, moduleSettings, prisma, rateLimitForRole, readJsonBody, siteTimeZone } from "@/core/sdk/server";
+import { getClientIP, log, logActivity, moduleSettings, prisma, rateLimitForRole, readJsonBody, siteTimeZone } from "@/core/sdk/server";
 import { auth } from "@/core/sdk/auth";
 import { shortOfStock, stockClaims } from "../../lib/stock";
 import { createCreditOrder, deliverPaidOrder } from "../../lib/credit-order";
@@ -9,9 +9,12 @@ import { effectivePrice } from "../../lib/availability";
 import { availabilityFor, rulesOf, type ProductRow } from "../../lib/availability-server";
 import { convertedCharge, resolveCurrency } from "../../lib/currency";
 import { startPaymentSession, listPaymentProviders } from "../../lib/payments";
+import { paymentFeeFor } from "../../lib/payment-fee-server";
 import { announceOrderCreated, announceOrderCompleted } from "../../lib/order-events";
 import { recordedVariables } from "../../lib/chest";
-import { billingRefusal, type BillingDetails } from "../../lib/billing";
+import { billingRefusal, normaliseBilling, type BillingDetails } from "../../lib/billing";
+import { processorTaxLine, taxRecord } from "../../lib/tax";
+import { headerReader, resolveTax } from "../../lib/tax-server";
 import {
     computeOrderPricing,
     computeCouponDiscount,
@@ -338,17 +341,36 @@ export async function POST(request: NextRequest) {
         }
 
         // ── Tax calculation ──
-        // The rate is the store module's own setting now. It used to be a
-        // row among the site's settings, which is the wrong home for a shop's
-        // own figure and left the "prices already include tax" switch with
-        // nowhere to sit beside it - and an operator can set one of those
-        // without the other only by accident.
-        const { taxRate, taxIncluded } = await moduleSettings<{
-            taxRate: number;
-            taxIncluded: boolean;
-        }>("store");
+        // Asked rather than read: the store's own two settings are the answer
+        // only where no tax module gives one. A tax module may charge by the
+        // buyer's country, which is why the billing form's country and the
+        // request's address travel with the question. The form is read here
+        // before it is checked below, because whether it is required depends
+        // on the total and the total depends on the tax; a country that is
+        // not a code is not one, and the answer says so.
         const currSetting = await prisma.setting.findUnique({ where: { key: "default_currency" } });
         const currency = resolveCurrency(currSetting?.value as string).toLowerCase();
+        const sentForTax = sentBilling ? normaliseBilling(sentBilling) : null;
+        const clientIp = getClientIP(request.headers);
+        const taxAnswer = await resolveTax({
+            channel: "checkout",
+            currency: currency.toUpperCase(),
+            billing: sentForTax
+                ? { kind: sentForTax.kind, country: sentForTax.country, taxNumber: sentForTax.taxNumber }
+                : null,
+            ip: clientIp === "unknown" ? null : clientIp,
+            header: headerReader(request.headers),
+        });
+        const taxRate = taxAnswer.rate;
+        const taxIncluded = taxAnswer.included;
+        const orderMetadata = {
+            playerName,
+            variables: variables || {},
+            creatorCode: creatorCodeRecord?.code || null,
+            // What was charged and why, for every screen that names the line
+            // and for an invoice that has to say why a sale carries no tax.
+            tax: taxRecord(taxAnswer) as unknown as Prisma.InputJsonObject,
+        };
 
         const { totalDiscount, tax, total } = computeTotals({
             subtotal,
@@ -416,7 +438,7 @@ export async function POST(request: NextRequest) {
                     currency,
                     notes,
                     billingDetails,
-                    metadata: { playerName, variables: variables || {}, creatorCode: creatorCodeRecord?.code || null },
+                    metadata: orderMetadata,
                     playerName,
                     description: `Store purchase (${orderItems.map((i) => i.name).join(", ")})`,
                 }),
@@ -477,7 +499,7 @@ export async function POST(request: NextRequest) {
                 billingDetails,
                 notes,
                 paymentMethod,
-                metadata: { playerName, variables: variables || {}, creatorCode: creatorCodeRecord?.code || null },
+                metadata: orderMetadata,
                 items: { create: orderItems },
             },
         });
@@ -567,16 +589,33 @@ export async function POST(request: NextRequest) {
             // inside the line amounts too, and sending it again would charge
             // the buyer for it twice.
             if (!taxIncluded) {
-                lines.push({ name: `Tax (${taxRate}%)`, quantity: 1, unitAmount: tax });
+                lines.push({ name: processorTaxLine(taxAnswer), quantity: 1, unitAmount: tax });
             }
         }
 
-        // What a gateway costs, when its operator chose to pass it on. Grossed
-        // up rather than added: the processor takes its cut of the larger
-        // amount too, so adding the percentage leaves the shop short by almost
-        // exactly the fee it was avoiding. See `grossUpForFee`.
-        const { charged, surcharge } = chosen.passOnFee
-            ? grossUpForFee(total, chosen.passOnFee)
+        // What this method costs, when the operator chose to pass it on: their
+        // row for it, or the gateway's own offer. Grossed up rather than
+        // added: the processor takes its cut of the larger amount too, so
+        // adding the percentage leaves the shop short by almost exactly the
+        // fee it was avoiding. See `grossUpForFee`.
+        //
+        // In the order's currency, before the conversion below: that one
+        // converts the whole charge, fee included, exactly once.
+        const resolvedFee = await paymentFeeFor(chosen, currency);
+        if (!resolvedFee.ok) {
+            // Like a missing exchange rate below: the order keeps its PENDING
+            // row, and the fee is not dropped or charged in the wrong
+            // currency, because either is an amount nobody chose.
+            return NextResponse.json(
+                {
+                    error: "That payment method cannot be used right now: its fee cannot be converted into this currency.",
+                    code: resolvedFee.code,
+                },
+                { status: 503 },
+            );
+        }
+        const { charged, surcharge } = resolvedFee.fee
+            ? grossUpForFee(total, resolvedFee.fee)
             : { charged: total, surcharge: 0 };
         if (surcharge > 0) {
             // Named rather than folded into the total: a charge a buyer cannot
@@ -617,10 +656,12 @@ export async function POST(request: NextRequest) {
 
         // Written down before the gateway is asked, so the settlement that
         // comes back is held against what was charged rather than taking the
-        // gateway's word for it. See `chargeShortfall`.
+        // gateway's word for it. See `chargeShortfall`. The fee goes beside
+        // it in the order's own currency, apart from `total`, so what was
+        // sold and what the processor was paid stay two numbers.
         await prisma.order.update({
             where: { id: order.id },
-            data: { chargeAmount: settleAmount, chargeCurrency: settleIn },
+            data: { chargeAmount: settleAmount, chargeCurrency: settleIn, paymentFee: surcharge },
         });
 
         const subProduct = isSubscriptionCheckout ? subscriptionProducts[0] : null;
