@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "updated": "2026-11-11",
-  "updatedAt": "2026-11-11T12:50:59Z",
+  "updatedAt": "2026-11-11T13:26:05Z",
   "modules": [
     {
       "id": "announcements",
@@ -371,7 +371,7 @@
       "icon": "Newspaper",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T12:50:59Z",
+      "updatedAt": "2026-11-11T13:26:05Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -2161,7 +2161,7 @@
       "icon": "MessageSquare",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T12:50:59Z",
+      "updatedAt": "2026-11-11T13:26:05Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -3038,7 +3038,7 @@
       "icon": "Trophy",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T12:50:59Z",
+      "updatedAt": "2026-11-11T13:26:05Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -3745,7 +3745,7 @@
       "icon": "UserRound",
       "category": "integration",
       "verified": true,
-      "updatedAt": "2026-11-11T12:50:59Z",
+      "updatedAt": "2026-11-11T13:26:05Z",
       "screenshots": [],
       "tags": [
         "minecraft",
@@ -3821,7 +3821,7 @@
       "icon": "Gavel",
       "category": "gaming",
       "verified": true,
-      "updatedAt": "2026-11-11T12:50:59Z",
+      "updatedAt": "2026-11-11T13:26:05Z",
       "screenshots": [],
       "tags": [
         "gaming"
@@ -5271,7 +5271,7 @@
       "icon": "UserPlus",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-11T12:50:59Z",
+      "updatedAt": "2026-11-11T13:26:05Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -5962,7 +5962,7 @@
       "icon": "Users",
       "category": "management",
       "verified": true,
-      "updatedAt": "2026-11-11T12:50:59Z",
+      "updatedAt": "2026-11-11T13:26:05Z",
       "screenshots": [],
       "tags": [
         "management"
@@ -6556,7 +6556,7 @@
       "icon": "Ticket",
       "category": "management",
       "verified": true,
-      "updatedAt": "2026-11-11T12:50:59Z",
+      "updatedAt": "2026-11-11T13:26:05Z",
       "screenshots": [],
       "tags": [
         "management"
