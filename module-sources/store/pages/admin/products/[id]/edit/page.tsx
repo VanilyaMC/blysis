@@ -77,6 +77,7 @@ export default function EditProductPage(props: PageProps) {
         isActive: true,
         isFeatured: false,
         giftable: true,
+        commandsPerUnit: false,
         subscriptionInterval: "month" as string,
         subscriptionIntervalCount: "1",
     });
@@ -119,6 +120,7 @@ export default function EditProductPage(props: PageProps) {
                     isActive: p.isActive ?? true,
                     isFeatured: p.isFeatured ?? false,
                     giftable: p.giftable ?? true,
+                    commandsPerUnit: p.commandsPerUnit ?? false,
                     subscriptionInterval: p.subscriptionInterval || "month",
                     subscriptionIntervalCount: p.subscriptionIntervalCount ? String(p.subscriptionIntervalCount) : "1",
                 });
@@ -196,6 +198,7 @@ export default function EditProductPage(props: PageProps) {
                 isActive: form.isActive,
                 isFeatured: form.isFeatured,
                 giftable: form.giftable,
+                commandsPerUnit: form.commandsPerUnit,
                 subscriptionInterval: form.type === "SUBSCRIPTION" ? form.subscriptionInterval : null,
                 subscriptionIntervalCount: form.type === "SUBSCRIPTION" ? parseInt(form.subscriptionIntervalCount) || 1 : null,
                 ...availabilityPayload(availability),
@@ -418,7 +421,13 @@ export default function EditProductPage(props: PageProps) {
                                 <CardTitle>{t("adm_deliveryCommands")}</CardTitle>
                                 <p className="text-sm text-muted-foreground">{t("adm_deliveryCommandsHelp")}</p>
                             </CardHeader>
-                            <CardContent>
+                            <CardContent className="space-y-4">
+                                <CheckboxField
+                                    checked={form.commandsPerUnit}
+                                    onChange={(e) => setForm({ ...form, commandsPerUnit: e.target.checked })}
+                                    label={t("adm_commandsPerUnit")}
+                                    description={t("adm_commandsPerUnitHint")}
+                                />
                                 <ProductCommandsEditor productId={productId} />
                             </CardContent>
                         </Card>
