@@ -36,6 +36,11 @@ const db = {
     setting: { findUnique: vi.fn(async () => null) },
     user: { findUnique: vi.fn(async () => ({ creditBalance: 0, roleId: null })) },
     order: { create: orderCreate },
+    creatorCode: {
+        findUnique: vi.fn(async () => null as unknown),
+        update: vi.fn(async () => ({})),
+    },
+    cartItem: { deleteMany: vi.fn(async () => ({ count: 0 })) },
     $transaction: vi.fn(),
 };
 
@@ -61,6 +66,21 @@ vi.mock("@/core/sdk/auth", () => ({ auth: async () => ({ user: { id: "buyer", ro
 vi.mock("@/modules/store/lib/upgrade-credit-server", () => ({
     creditingPurchases: async () => new Set<string>(),
     ownedRungsOn: async () => [],
+}));
+
+vi.mock("@/modules/store/lib/order-events", () => ({
+    announceOrderCreated: vi.fn(async () => {}),
+    announceOrderCompleted: vi.fn(async () => {}),
+}));
+// Nothing here is counted on a shelf; `a-limited-product-runs-out` is where stock is.
+vi.mock("@/modules/store/lib/stock", async (importOriginal) => ({
+    ...(await importOriginal<Record<string, unknown>>()),
+    shortOfStock: vi.fn(async () => []),
+}));
+// No gateway is set up, so a card checkout writes its order and stops there.
+vi.mock("@/modules/store/lib/payments", () => ({
+    listPaymentProviders: vi.fn(async () => []),
+    startPaymentSession: vi.fn(),
 }));
 
 const { POST } = await import("@/modules/store/api/checkout/route");

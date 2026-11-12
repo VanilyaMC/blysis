@@ -203,6 +203,11 @@ export async function settleOrder(settlement: PaymentSettlement): Promise<Paymen
         });
         if (claimed.count === 0) return { settled: false, short: [] as string[] };
 
+        // Paid here, inside the claim, and nowhere at checkout: an order
+        // nobody pays for earns its creator nothing, and a retried webhook
+        // that loses the claim pays nothing twice.
+        await payCommissionFor(tx, order);
+
         // Stock comes off the shelf here rather than at checkout: an order
         // nobody pays for must not hold anything. Inside the same claim as the
         // status, so a retried webhook cannot take it twice.

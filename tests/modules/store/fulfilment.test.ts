@@ -64,6 +64,10 @@ const db = {
     product: { findMany: vi.fn(async (): Promise<unknown[]> => []), updateMany: vi.fn(async () => ({ count: 1 })) },
     orderItem: { aggregate: vi.fn(async () => ({ _sum: { quantity: null as number | null } })) },
     user: { update: vi.fn(async () => ({})) },
+    creatorCode: {
+        findUnique: vi.fn(async () => null as unknown),
+        update: vi.fn(async () => ({})),
+    },
     creditTransaction: { findUnique: vi.fn(async () => null), create: vi.fn(async () => ({})) },
     creditTopUp: {
         findUnique: vi.fn(async () => null as unknown),
