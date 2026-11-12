@@ -190,6 +190,34 @@ describe("the checkout", () => {
         expect(body.code).toBe("store_limit_reached");
     });
 
+    it("pays a creator nothing for an order that is not paid yet", async () => {
+        // A checkout at a gateway is only an order waiting for its money. A
+        // creator paid at this point was paid for every checkout nobody
+        // finished, as many times as one could be started.
+        db.creatorCode.findUnique.mockResolvedValueOnce({
+            id: "cc1", code: "ALEX", creatorId: "creator", isActive: true,
+            discountPercent: 0, commissionPercent: 10, productIds: [], categoryIds: [],
+        });
+        db.$transaction.mockImplementation(async (work: unknown) => (work as (tx: unknown) => Promise<unknown>)(db));
+
+        const res = await POST(
+            new NextRequest("http://localhost/api/v1/store/checkout", {
+                method: "POST",
+                body: JSON.stringify({
+                    items: [{ productId: "p1", quantity: 1 }],
+                    playerName: "Steve",
+                    paymentMethod: "card",
+                    creatorCode: "ALEX",
+                }),
+            }),
+        );
+
+        db.$transaction.mockReset();
+        expect(orderCreate).toHaveBeenCalled();
+        expect(res.status).toBe(503);
+        expect(db.creatorCode.update).not.toHaveBeenCalled();
+    });
+
     it("refuses over the period's allowance", async () => {
         row.current = product({ periodStock: 5 });
         bought.current = 5;

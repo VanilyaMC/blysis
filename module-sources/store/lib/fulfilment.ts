@@ -21,6 +21,7 @@ import { cancelTopUp, findTopUp, refundTopUp, settleCredits } from "./credit-top
 import { revokeRefundedRoles, takeBackOrder, type GrantedRole } from "./take-back";
 import { ALREADY, OK, failed, refused } from "./payment-outcome";
 import { pastTheLimit } from "./availability-server";
+import { payCommissionFor } from "./creator-commission";
 
 /** Thrown inside a settlement to roll it back: the order would pass a limit. */
 class PastTheLimit extends Error {
