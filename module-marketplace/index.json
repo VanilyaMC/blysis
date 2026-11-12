@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "updated": "2026-11-12",
-  "updatedAt": "2026-11-12T15:59:40Z",
+  "updatedAt": "2026-11-12T16:00:22Z",
   "modules": [
     {
       "id": "announcements",
@@ -5269,13 +5269,13 @@
           "description": "通过推荐新用户赚取积分"
         }
       },
-      "version": "1.8.0",
+      "version": "1.8.1",
       "coreVersion": "^5.26.0",
       "author": "Blysis",
       "icon": "UserPlus",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:00:22Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -5291,7 +5291,9 @@
           "referral.referral.used",
           "credit.change"
         ],
-        "listens": []
+        "listens": [
+          "store.order.completed"
+        ]
       },
       "stats": {
         "publicRoutes": 1,
