@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "updated": "2026-11-13",
-  "updatedAt": "2026-11-13T00:15:35Z",
+  "updatedAt": "2026-11-13T00:17:50Z",
   "modules": [
     {
       "id": "announcements",
@@ -6198,13 +6198,13 @@
           "description": "完整的电商功能，包括商品、分类、购物车和订单"
         }
       },
-      "version": "2.62.0",
+      "version": "2.63.0",
       "coreVersion": "^5.37.0",
       "author": "Blysis Team",
       "icon": "ShoppingBag",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-13T00:15:30Z",
+      "updatedAt": "2026-11-13T00:17:50Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -6267,8 +6267,8 @@
       },
       "stats": {
         "publicRoutes": 6,
-        "adminRoutes": 17,
-        "apiRoutes": 57,
+        "adminRoutes": 18,
+        "apiRoutes": 58,
         "widgets": 6
       }
     },
