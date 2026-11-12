@@ -2,7 +2,7 @@
   "id": "store",
   "name": "Store Module",
   "description": "Complete e-commerce functionality with products, categories, cart and orders",
-  "version": "2.57.2",
+  "version": "2.57.3",
   "coreVersion": "^5.34.0",
   "category": "commerce",
   "author": "Blysis Team",
@@ -875,6 +875,10 @@
     },
     {
       "hook": "credit.change",
+      "type": "filter"
+    },
+    {
+      "hook": "credits.balance",
       "type": "filter"
     },
     {
