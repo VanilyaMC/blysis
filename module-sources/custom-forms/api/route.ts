@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateSlug } from "@/core/sdk";
 import { contentTranslationsInput, isAdmin, prisma, readJsonBody, saveContentTranslations, translateContent } from "@/core/sdk/server";
 import { auth } from "@/core/sdk/auth";
-import { formCreateSchema } from "../lib/validations";
+import { formCreateSchema, limitWithoutSignIn } from "../lib/validations";
 import { FORM_TEXT, formTextLimits } from "../lib/form-text";
 
 /**
@@ -48,7 +48,10 @@ export async function POST(request: NextRequest) {
     if (!parsed.success) {
         return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "Invalid payload" }, { status: 400 });
     }
-    const { title, description, fields } = parsed.data;
+    const { title, description, fields, requireSignIn = false, submissionLimit = null } = parsed.data;
+    if (limitWithoutSignIn(requireSignIn, submissionLimit)) {
+        return NextResponse.json({ error: "A limit needs sign-in", code: "limit_needs_sign_in" }, { status: 400 });
+    }
     // Each question's words may be translated too, so what may be sent is
     // read off the questions being saved.
     const translations = contentTranslationsInput(jsonBody, formTextLimits(fields));
@@ -57,7 +60,7 @@ export async function POST(request: NextRequest) {
     const slug = generateSlug(title);
     const form = await prisma.$transaction(async (tx) => {
         const created = await tx.customForm.create({
-            data: { title, slug, description: description || null, fields },
+            data: { title, slug, description: description || null, fields, requireSignIn, submissionLimit },
         });
         if (translations.value) await saveContentTranslations(tx, { ...FORM_TEXT, recordId: created.id }, translations.value);
         return created;
