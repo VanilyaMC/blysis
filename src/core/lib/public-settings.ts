@@ -10,6 +10,7 @@
  * `tests/unit/the-sites-name-is-the-same-on-both-sides.test.tsx` holds the
  * first render.
  */
+import { withEnvironmentFallbacks } from "@/core/lib/site-contact";
 import { prisma } from "@/core/lib/db";
 import { cached } from "@/core/lib/cache";
 import { SETTINGS_CACHE, getDurationMs } from "@/core/lib/security-settings";
@@ -41,6 +42,13 @@ const PUBLIC_KEYS = [
     "identity_requires_password",
     "site_email",
     "site_discord_url",
+    // Where else the site can be found, drawn in the footer. One per network,
+    // listed in `SITE_SOCIAL_LINKS`.
+    "site_facebook_url",
+    "site_instagram_url",
+    "site_x_url",
+    "site_youtube_url",
+    "site_tiktok_url",
     // Which languages the footer offers a visitor, and which the site opens
     // in. The proxy keeps a visitor out of the others either way; this stops
     // the picker offering a language that would only redirect.
@@ -107,5 +115,15 @@ export async function readPublicSettings(): Promise<PublicSettings> {
         },
     );
 
-    return { settings, cacheSeconds: Math.floor(ttlMs / 1000) };
+    // The documented environment variables fill links the operator left
+    // empty, on the server, so a browser never has to read them.
+    const withFallbacks = withEnvironmentFallbacks(settings, {
+        SITE_EMAIL: process.env.SITE_EMAIL,
+        COMMUNITY_URL: process.env.COMMUNITY_URL,
+        SOCIAL_FACEBOOK: process.env.SOCIAL_FACEBOOK,
+        SOCIAL_INSTAGRAM: process.env.SOCIAL_INSTAGRAM,
+        SOCIAL_TWITTER: process.env.SOCIAL_TWITTER,
+        SOCIAL_YOUTUBE: process.env.SOCIAL_YOUTUBE,
+    });
+    return { settings: withFallbacks, cacheSeconds: Math.floor(ttlMs / 1000) };
 }
