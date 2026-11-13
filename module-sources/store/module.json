@@ -2,7 +2,7 @@
   "id": "store",
   "name": "Store Module",
   "description": "Complete e-commerce functionality with products, categories, cart and orders",
-  "version": "2.60.0",
+  "version": "2.61.0",
   "coreVersion": "^5.37.0",
   "category": "commerce",
   "author": "Blysis Team",
@@ -298,6 +298,41 @@
       "default": false,
       "label": "Prices already include tax",
       "description": "On, the shown price is what the customer pays and holds the tax. Off, tax is added at checkout. Not used while a tax module is installed."
+    },
+    {
+      "key": "thankYouCouponEnabled",
+      "type": "boolean",
+      "default": false,
+      "label": "Thank buyers with a coupon",
+      "description": "After a paid order, the buyer gets a coupon for their next order that only they can use, once. Shown in the order email and on the order."
+    },
+    {
+      "key": "thankYouCouponPercent",
+      "type": "number",
+      "default": 10,
+      "min": 1,
+      "max": 90,
+      "label": "Thank-you coupon discount (%)",
+      "description": "How much the thank-you coupon takes off the next order."
+    },
+    {
+      "key": "thankYouCouponDays",
+      "type": "number",
+      "default": 30,
+      "min": 1,
+      "max": 365,
+      "label": "Thank-you coupon lasts (days)",
+      "description": "How long the buyer has to use it, counted from the payment."
+    },
+    {
+      "key": "thankYouCouponMinTotal",
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 100000,
+      "step": 0.01,
+      "label": "Thank-you coupon minimum order",
+      "description": "An order has to total at least this, in the site currency, to earn one. Zero is any paid order; a free order never earns one."
     },
     {
       "key": "checkoutReminderEnabled",
@@ -1749,7 +1784,14 @@
         "topUp_campaignEnds": "Ends in {days, plural, one {# day} other {# days}} {hours, plural, one {# hour} other {# hours}}",
         "topUp_campaignEndsSoon": "Ends in {hours, plural, one {# hour} other {# hours}} {minutes, plural, one {# minute} other {# minutes}}",
         "cart_restored": "Your basket is back. Finish whenever you are ready.",
-        "cart_restoreFailed": "That order can no longer be picked up."
+        "cart_restoreFailed": "That order can no longer be picked up.",
+        "tab_orders_thanksTitle": "A thank-you coupon",
+        "tab_orders_thanksBody": "{percent}% off your next order, for you only and once. Use it by {date}.",
+        "adm_couponPersonal": "Personal",
+        "tab_orders_thanksLive": "Ready to use",
+        "tab_orders_thanksUsed": "Used",
+        "tab_orders_thanksExpired": "Expired",
+        "tab_orders_thanksWithdrawn": "Withdrawn"
       },
       "cart": {
         "title": "Shopping Cart",
@@ -2721,7 +2763,14 @@
         "topUp_campaignEnds": "{days} gün {hours} saat sonra bitiyor",
         "topUp_campaignEndsSoon": "{hours} saat {minutes} dakika sonra bitiyor",
         "cart_restored": "Sepetin geri geldi. Hazır olduğunda tamamlayabilirsin.",
-        "cart_restoreFailed": "Bu sipariş artık devam ettirilemiyor."
+        "cart_restoreFailed": "Bu sipariş artık devam ettirilemiyor.",
+        "tab_orders_thanksTitle": "Teşekkür kuponu",
+        "tab_orders_thanksBody": "Bir sonraki siparişinde %{percent} indirim; yalnızca senin için ve bir kez. {date} tarihine kadar kullan.",
+        "adm_couponPersonal": "Kişisel",
+        "tab_orders_thanksLive": "Kullanıma hazır",
+        "tab_orders_thanksUsed": "Kullanıldı",
+        "tab_orders_thanksExpired": "Süresi doldu",
+        "tab_orders_thanksWithdrawn": "Geri alındı"
       },
       "cart": {
         "title": "Alışveriş Sepeti",
@@ -3693,7 +3742,14 @@
         "topUp_campaignEnds": "{days} gün {hours} saat sonra bitir",
         "topUp_campaignEndsSoon": "{hours} saat {minutes} dəqiqə sonra bitir",
         "cart_restored": "Səbətiniz geri qayıtdı. Hazır olanda tamamlayın.",
-        "cart_restoreFailed": "Bu sifarişə artıq davam etmək olmur."
+        "cart_restoreFailed": "Bu sifarişə artıq davam etmək olmur.",
+        "tab_orders_thanksTitle": "Təşəkkür kuponu",
+        "tab_orders_thanksBody": "Növbəti sifarişinizə {percent}% endirim, yalnız sizin üçün və bir dəfə. {date} tarixinədək istifadə edin.",
+        "adm_couponPersonal": "Şəxsi",
+        "tab_orders_thanksLive": "İstifadəyə hazırdır",
+        "tab_orders_thanksUsed": "İstifadə olunub",
+        "tab_orders_thanksExpired": "Müddəti bitib",
+        "tab_orders_thanksWithdrawn": "Geri götürülüb"
       },
       "cart": {
         "title": "Alış-veriş səbəti",
@@ -4665,7 +4721,14 @@
         "topUp_campaignEnds": "Endet in {days, plural, one {# Tag} other {# Tagen}} {hours, plural, one {# Stunde} other {# Stunden}}",
         "topUp_campaignEndsSoon": "Endet in {hours, plural, one {# Stunde} other {# Stunden}} {minutes, plural, one {# Minute} other {# Minuten}}",
         "cart_restored": "Dein Warenkorb ist wieder da. Schließe ab, wann du willst.",
-        "cart_restoreFailed": "Diese Bestellung kann nicht mehr fortgesetzt werden."
+        "cart_restoreFailed": "Diese Bestellung kann nicht mehr fortgesetzt werden.",
+        "tab_orders_thanksTitle": "Ein Dankeschön-Gutschein",
+        "tab_orders_thanksBody": "{percent} % Rabatt auf deine nächste Bestellung, nur für dich und einmal. Einlösbar bis {date}.",
+        "adm_couponPersonal": "Persönlich",
+        "tab_orders_thanksLive": "Einlösbar",
+        "tab_orders_thanksUsed": "Eingelöst",
+        "tab_orders_thanksExpired": "Abgelaufen",
+        "tab_orders_thanksWithdrawn": "Zurückgezogen"
       },
       "cart": {
         "title": "Warenkorb",
@@ -5637,7 +5700,14 @@
         "topUp_campaignEnds": "Termina en {days, plural, one {# día} other {# días}} {hours, plural, one {# hora} other {# horas}}",
         "topUp_campaignEndsSoon": "Termina en {hours, plural, one {# hora} other {# horas}} {minutes, plural, one {# minuto} other {# minutos}}",
         "cart_restored": "Tu carrito ha vuelto. Termina cuando quieras.",
-        "cart_restoreFailed": "Ese pedido ya no se puede retomar."
+        "cart_restoreFailed": "Ese pedido ya no se puede retomar.",
+        "tab_orders_thanksTitle": "Un cupón de agradecimiento",
+        "tab_orders_thanksBody": "Un {percent} % de descuento en tu próximo pedido, solo para ti y una vez. Úsalo antes del {date}.",
+        "adm_couponPersonal": "Personal",
+        "tab_orders_thanksLive": "Listo para usar",
+        "tab_orders_thanksUsed": "Usado",
+        "tab_orders_thanksExpired": "Caducado",
+        "tab_orders_thanksWithdrawn": "Retirado"
       },
       "cart": {
         "title": "Carrito de compra",
@@ -6609,7 +6679,14 @@
         "topUp_campaignEnds": "Lõpeb {days, plural, one {# päeva} other {# päeva}} {hours, plural, one {# tunni} other {# tunni}} pärast",
         "topUp_campaignEndsSoon": "Lõpeb {hours, plural, one {# tunni} other {# tunni}} {minutes, plural, one {# minuti} other {# minuti}} pärast",
         "cart_restored": "Sinu ostukorv on tagasi. Lõpeta, kui oled valmis.",
-        "cart_restoreFailed": "Seda tellimust ei saa enam jätkata."
+        "cart_restoreFailed": "Seda tellimust ei saa enam jätkata.",
+        "tab_orders_thanksTitle": "Tänukupong",
+        "tab_orders_thanksBody": "{percent}% allahindlust sinu järgmisele tellimusele, ainult sulle ja ühe korra. Kasuta enne {date}.",
+        "adm_couponPersonal": "Isiklik",
+        "tab_orders_thanksLive": "Kasutamiseks valmis",
+        "tab_orders_thanksUsed": "Kasutatud",
+        "tab_orders_thanksExpired": "Aegunud",
+        "tab_orders_thanksWithdrawn": "Tühistatud"
       },
       "cart": {
         "title": "Ostukorv",
@@ -7581,7 +7658,14 @@
         "topUp_campaignEnds": "Se termine dans {days, plural, one {# jour} other {# jours}} {hours, plural, one {# heure} other {# heures}}",
         "topUp_campaignEndsSoon": "Se termine dans {hours, plural, one {# heure} other {# heures}} {minutes, plural, one {# minute} other {# minutes}}",
         "cart_restored": "Votre panier est de retour. Terminez quand vous voulez.",
-        "cart_restoreFailed": "Cette commande ne peut plus être reprise."
+        "cart_restoreFailed": "Cette commande ne peut plus être reprise.",
+        "tab_orders_thanksTitle": "Un coupon de remerciement",
+        "tab_orders_thanksBody": "{percent} % de réduction sur votre prochaine commande, pour vous seul et une fois. À utiliser avant le {date}.",
+        "adm_couponPersonal": "Personnel",
+        "tab_orders_thanksLive": "Prêt à l’emploi",
+        "tab_orders_thanksUsed": "Utilisé",
+        "tab_orders_thanksExpired": "Expiré",
+        "tab_orders_thanksWithdrawn": "Retiré"
       },
       "cart": {
         "title": "Panier",
@@ -8553,7 +8637,14 @@
         "topUp_campaignEnds": "Termina tra {days, plural, one {# giorno} other {# giorni}} {hours, plural, one {# ora} other {# ore}}",
         "topUp_campaignEndsSoon": "Termina tra {hours, plural, one {# ora} other {# ore}} {minutes, plural, one {# minuto} other {# minuti}}",
         "cart_restored": "Il tuo carrello è tornato. Completa quando vuoi.",
-        "cart_restoreFailed": "Quell’ordine non può più essere ripreso."
+        "cart_restoreFailed": "Quell’ordine non può più essere ripreso.",
+        "tab_orders_thanksTitle": "Un coupon di ringraziamento",
+        "tab_orders_thanksBody": "Il {percent}% di sconto sul tuo prossimo ordine, solo per te e una volta. Usalo entro il {date}.",
+        "adm_couponPersonal": "Personale",
+        "tab_orders_thanksLive": "Pronto all’uso",
+        "tab_orders_thanksUsed": "Usato",
+        "tab_orders_thanksExpired": "Scaduto",
+        "tab_orders_thanksWithdrawn": "Ritirato"
       },
       "cart": {
         "title": "Carrello",
@@ -9525,7 +9616,14 @@
         "topUp_campaignEnds": "Kończy się za {days, plural, one {# dzień} other {# dni}} {hours, plural, one {# godzinę} few {# godziny} many {# godzin} other {# godziny}}",
         "topUp_campaignEndsSoon": "Kończy się za {hours, plural, one {# godzinę} few {# godziny} many {# godzin} other {# godziny}} {minutes, plural, one {# minutę} few {# minuty} many {# minut} other {# minuty}}",
         "cart_restored": "Koszyk wrócił. Dokończ, kiedy zechcesz.",
-        "cart_restoreFailed": "Tego zamówienia nie można już wznowić."
+        "cart_restoreFailed": "Tego zamówienia nie można już wznowić.",
+        "tab_orders_thanksTitle": "Kupon z podziękowaniem",
+        "tab_orders_thanksBody": "{percent}% zniżki na następne zamówienie, tylko dla Ciebie i jeden raz. Wykorzystaj do {date}.",
+        "adm_couponPersonal": "Osobisty",
+        "tab_orders_thanksLive": "Gotowy do użycia",
+        "tab_orders_thanksUsed": "Wykorzystany",
+        "tab_orders_thanksExpired": "Wygasł",
+        "tab_orders_thanksWithdrawn": "Wycofany"
       },
       "cart": {
         "title": "Koszyk",
@@ -10497,7 +10595,14 @@
         "topUp_campaignEnds": "Termina dentro de {days, plural, one {# dia} other {# dias}} {hours, plural, one {# hora} other {# horas}}",
         "topUp_campaignEndsSoon": "Termina dentro de {hours, plural, one {# hora} other {# horas}} {minutes, plural, one {# minuto} other {# minutos}}",
         "cart_restored": "O seu carrinho está de volta. Conclua quando quiser.",
-        "cart_restoreFailed": "Esse pedido já não pode ser retomado."
+        "cart_restoreFailed": "Esse pedido já não pode ser retomado.",
+        "tab_orders_thanksTitle": "Um cupom de agradecimento",
+        "tab_orders_thanksBody": "{percent}% de desconto no seu próximo pedido, só para você e uma vez. Use até {date}.",
+        "adm_couponPersonal": "Pessoal",
+        "tab_orders_thanksLive": "Pronto para usar",
+        "tab_orders_thanksUsed": "Usado",
+        "tab_orders_thanksExpired": "Expirado",
+        "tab_orders_thanksWithdrawn": "Retirado"
       },
       "cart": {
         "title": "Carrinho de compras",
@@ -11469,7 +11574,14 @@
         "topUp_campaignEnds": "Закончится через {days, plural, one {# день} few {# дня} many {# дней} other {# дня}} {hours, plural, one {# час} few {# часа} many {# часов} other {# часа}}",
         "topUp_campaignEndsSoon": "Закончится через {hours, plural, one {# час} few {# часа} many {# часов} other {# часа}} {minutes, plural, one {# минуту} few {# минуты} many {# минут} other {# минуты}}",
         "cart_restored": "Ваша корзина снова на месте. Завершите, когда будете готовы.",
-        "cart_restoreFailed": "Этот заказ больше нельзя продолжить."
+        "cart_restoreFailed": "Этот заказ больше нельзя продолжить.",
+        "tab_orders_thanksTitle": "Купон в знак благодарности",
+        "tab_orders_thanksBody": "Скидка {percent}% на ваш следующий заказ, только для вас и один раз. Используйте до {date}.",
+        "adm_couponPersonal": "Личный",
+        "tab_orders_thanksLive": "Готов к использованию",
+        "tab_orders_thanksUsed": "Использован",
+        "tab_orders_thanksExpired": "Истёк",
+        "tab_orders_thanksWithdrawn": "Отозван"
       },
       "cart": {
         "title": "Корзина",
@@ -12441,7 +12553,14 @@
         "topUp_campaignEnds": "{days} 天 {hours} 小时后结束",
         "topUp_campaignEndsSoon": "{hours} 小时 {minutes} 分钟后结束",
         "cart_restored": "你的购物车已恢复。准备好后即可完成购买。",
-        "cart_restoreFailed": "该订单已无法继续。"
+        "cart_restoreFailed": "该订单已无法继续。",
+        "tab_orders_thanksTitle": "感谢优惠券",
+        "tab_orders_thanksBody": "下一笔订单享 {percent}% 折扣，仅限你本人使用一次。请在 {date} 前使用。",
+        "adm_couponPersonal": "个人",
+        "tab_orders_thanksLive": "可以使用",
+        "tab_orders_thanksUsed": "已使用",
+        "tab_orders_thanksExpired": "已过期",
+        "tab_orders_thanksWithdrawn": "已撤回"
       },
       "cart": {
         "title": "购物车",
