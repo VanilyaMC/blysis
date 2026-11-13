@@ -7,7 +7,7 @@
  */
 import type { z } from "zod";
 import { prisma, siteTimeZone } from "@/core/sdk/server";
-import { effectivePrice } from "./availability";
+import { offerPrice, runningCampaignEntries } from "./campaign-server";
 import { saleInstant, saleRunning, withStoreSale, type StoreSale } from "./store-sale";
 import type { storeSaleSchema } from "./validations";
 
@@ -96,14 +96,16 @@ export async function storeSaleWrite(form: z.infer<typeof storeSaleSchema>): Pro
 }
 
 /**
- * What a product is priced at before anything personal: its own sale window,
- * then a store-wide sale. The checkout starts from this, so the cart and the
- * coupon preview, which read their basket from the database rather than
- * through the checkout, start from it too.
+ * What a product is priced at before anything personal: the lowest of its own
+ * sale window, a running campaign and a store-wide sale. The checkout starts
+ * from this, so the cart and the coupon preview, which read their basket from
+ * the database rather than through the checkout, start from it too.
  *
- * Reads the running sales once and answers for as many products as asked.
+ * Reads the running campaigns and sales once and answers for as many
+ * products as asked.
  */
 export async function saleAdjustedPrice(at: Date): Promise<(product: {
+    id: string;
     price: unknown;
     salePrice: unknown;
     saleFrom: Date | null;
@@ -111,15 +113,18 @@ export async function saleAdjustedPrice(at: Date): Promise<(product: {
     categoryId: string | null;
 }) => number> {
     const sales = await runningStoreSales(at);
+    const campaignEntries = await runningCampaignEntries(prisma, at, await siteTimeZone());
     return (product) => {
         const listPrice = Number(product.price);
-        const priced = effectivePrice(
+        const priced = offerPrice(
             {
+                id: product.id,
                 price: listPrice,
                 salePrice: product.salePrice === null || product.salePrice === undefined ? null : Number(product.salePrice),
                 saleFrom: product.saleFrom,
                 saleUntil: product.saleUntil,
             },
+            campaignEntries,
             at,
         );
         return withStoreSale(priced, { listPrice, categoryId: product.categoryId }, sales, at).price;

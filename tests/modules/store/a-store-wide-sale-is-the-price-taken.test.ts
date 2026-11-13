@@ -50,6 +50,8 @@ const db = {
         // re-checks it, so handing back every row tests that half too.
         findMany: vi.fn(async () => sales.current),
     },
+    // No campaign is running.
+    campaign: { findMany: async () => [] },
     category: { findMany: vi.fn(async () => shelves.current) },
     productVariable: { findMany: vi.fn(async () => []) },
     bulkDiscount: { findMany: vi.fn(async () => []) },
