@@ -19,6 +19,8 @@ const product = { current: { type: "ONE_TIME", price: 100 } };
 const balance = { current: 0 };
 
 const db = {
+    // No store-wide sale is running.
+    storeSale: { findMany: async () => [] },
     product: {
         findMany: vi.fn(async ({ where }: { where: { stock?: unknown } }) => where.stock ? [] : [
             {

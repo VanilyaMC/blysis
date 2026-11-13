@@ -59,6 +59,8 @@ const product = {
 };
 
 const db = {
+    // No store-wide sale is running.
+    storeSale: { findMany: async () => [] },
     coupon: { findUnique: vi.fn(async () => personal), updateMany: couponClaim },
     cartItem: {
         findMany: vi.fn(async () => [{ quantity: 1, product: { id: "p1", price: 100, categoryId: "c1" } }]),

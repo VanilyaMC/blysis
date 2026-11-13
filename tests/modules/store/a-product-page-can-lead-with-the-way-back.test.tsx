@@ -43,6 +43,8 @@ vi.mock("@/core/sdk/page", async () => {
 vi.mock("@/core/sdk/server", async () => ({
     ...(await vi.importActual<typeof import("@/core/lib/content-translations")>("@/core/lib/content-translations")),
     moduleSettings: async () => ({ lowStockAt: 0 }),
+    // No store-wide sale is running.
+    prisma: { storeSale: { findMany: async () => [] } },
 }));
 
 vi.mock("@/core/sdk/ui", () => ({ RichContent: () => null }));
