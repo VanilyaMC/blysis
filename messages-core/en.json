@@ -1393,7 +1393,7 @@
     "quickLinks": "Quick Links",
     "legal": "Legal",
     "allRightsReserved": "All rights reserved.",
-    "madeBy": "Made by <link>{vendor}</link>"
+    "madeBy": "Powered by <link>{vendor}</link>"
   },
   "profile": {
     "accountDeleted": "Account deleted",

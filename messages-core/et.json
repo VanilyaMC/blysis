@@ -1393,7 +1393,7 @@
     "quickLinks": "Kiirlingid",
     "legal": "Õiguslik teave",
     "allRightsReserved": "Kõik õigused kaitstud.",
-    "madeBy": "Tegi <link>{vendor}</link>"
+    "madeBy": "Toetab <link>{vendor}</link>"
   },
   "profile": {
     "accountDeleted": "Konto kustutatud",

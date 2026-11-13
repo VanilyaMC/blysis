@@ -7,7 +7,7 @@
  * copyright line beside it. This one names the vendor and is the same on
  * every install, which is why it is a constant and not a setting.
  */
-export const VENDOR_NAME = "Inovixi";
+export const VENDOR_NAME = "Blysis";
 
 /** Where the credit points. Trailing slash kept: it is the canonical form. */
-export const VENDOR_URL = "https://inovixi.com/";
+export const VENDOR_URL = "https://blysis.com/";

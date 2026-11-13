@@ -1393,7 +1393,7 @@
     "quickLinks": "Быстрые ссылки",
     "legal": "Правовая информация",
     "allRightsReserved": "Все права защищены.",
-    "madeBy": "Сделано: <link>{vendor}</link>"
+    "madeBy": "Работает на <link>{vendor}</link>"
   },
   "profile": {
     "accountDeleted": "Учетная запись удалена",

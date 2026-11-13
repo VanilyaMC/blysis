@@ -1393,7 +1393,7 @@
     "quickLinks": "Sürətli keçidlər",
     "legal": "Hüquqi",
     "allRightsReserved": "Bütün hüquqlar qorunur.",
-    "madeBy": "<link>{vendor}</link> tərəfindən hazırlanıb"
+    "madeBy": "Gücünü <link>{vendor}</link>-dən alır"
   },
   "profile": {
     "accountDeleted": "Hesab silindi",

@@ -1393,7 +1393,7 @@
     "quickLinks": "Liens rapides",
     "legal": "Mentions légales",
     "allRightsReserved": "Tous droits réservés.",
-    "madeBy": "Réalisé par <link>{vendor}</link>"
+    "madeBy": "Propulsé par <link>{vendor}</link>"
   },
   "profile": {
     "accountDeleted": "Compte supprimé",
