@@ -45,6 +45,11 @@ const MEANT_TO_BE = [
     "src/modules/",
     // Codegen output, rebuilt by `prebuild` on every machine.
     "src/core/generated/",
+    // This fork only: the site's own theme is private. Its installer copies
+    // it in before a build and adds it to the local git exclude so that it
+    // can never be committed to this public fork. A fresh clone has no such
+    // directory, so nothing is missing from one.
+    "src/themes/vanilya/",
 ];
 
 describe("what a module is made of", () => {
