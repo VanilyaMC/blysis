@@ -24,7 +24,7 @@ export function CreditBalanceChip() {
         <Link
             href="/profile?section=credits"
             aria-label={t("bal_ariaLabel", { amount: formatted })}
-            className="flex shrink-0 items-center gap-1 rounded-md px-2 py-1.5 text-sm font-semibold tabular-nums text-foreground hover:bg-muted transition-colors"
+            className="flex min-w-0 items-center gap-1 rounded-md px-2 py-1.5 text-sm font-semibold tabular-nums text-foreground hover:bg-muted transition-colors"
         >
             <Coins className="h-4 w-4 text-primary" aria-hidden="true" />
             <span className="max-w-[6rem] truncate">{formatted}</span>
