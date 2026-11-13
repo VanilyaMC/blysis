@@ -37,6 +37,7 @@ const tables = {
     creditBonusCampaign: { findMany: async () => [] },
     campaign: fakeTable(() => ({ isActive: true, days: [], createdAt: new Date(), entries: [] })),
     campaignEntry: fakeTable(),
+    storeSale: fakeTable(),
     ownedProduct: fakeTable(),
     productCommand: fakeTable(),
     productVariable: fakeTable(),
