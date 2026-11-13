@@ -2,7 +2,7 @@
   "id": "credits",
   "name": "Credit System",
   "description": "Virtual currency wallet for users",
-  "version": "1.16.0",
+  "version": "1.16.1",
   "coreVersion": "^5.39.0",
   "category": "commerce",
   "author": "Blysis",
