@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "updated": "2026-11-14",
-  "updatedAt": "2026-11-14T14:09:34Z",
+  "updatedAt": "2026-11-14T20:17:53Z",
   "modules": [
     {
       "id": "announcements",
@@ -59,7 +59,7 @@
       "icon": "Megaphone",
       "category": "management",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "management"
@@ -288,7 +288,7 @@
       "icon": "FileText",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -371,7 +371,7 @@
       "icon": "Newspaper",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-13T18:44:47Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -455,7 +455,7 @@
       "icon": "History",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-14T09:44:11Z",
+      "updatedAt": "2026-11-14T20:17:53Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -852,7 +852,7 @@
       "icon": "Table",
       "category": "content",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "content"
@@ -1005,7 +1005,7 @@
       "icon": "Package",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-13T00:15:35Z",
+      "updatedAt": "2026-11-14T12:08:57Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -1091,7 +1091,7 @@
       "icon": "Coins",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-13T18:42:14Z",
+      "updatedAt": "2026-11-14T20:17:53Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -1331,7 +1331,7 @@
       "icon": "DollarSign",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -1408,7 +1408,7 @@
       "icon": "FileEdit",
       "category": "content",
       "verified": true,
-      "updatedAt": "2026-11-13T00:46:31Z",
+      "updatedAt": "2026-11-14T20:17:53Z",
       "screenshots": [],
       "tags": [
         "content"
@@ -1489,7 +1489,7 @@
       "icon": "FileText",
       "category": "content",
       "verified": true,
-      "updatedAt": "2026-11-12T13:56:24Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "content"
@@ -1564,7 +1564,7 @@
       "icon": "MessageSquare",
       "category": "integration",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "integration"
@@ -1639,7 +1639,7 @@
       "icon": "MessageSquare",
       "category": "integration",
       "verified": true,
-      "updatedAt": "2026-11-14T14:09:34Z",
+      "updatedAt": "2026-11-14T20:17:53Z",
       "screenshots": [],
       "tags": [
         "integration"
@@ -1799,7 +1799,7 @@
       "icon": "Download",
       "category": "content",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "content"
@@ -2026,7 +2026,7 @@
       "icon": "Database",
       "category": "content",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "content"
@@ -2251,7 +2251,7 @@
       "icon": "MessageSquare",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-13T18:44:47Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -2336,7 +2336,7 @@
       "icon": "Cable",
       "category": "gaming",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "gaming"
@@ -2662,7 +2662,7 @@
       "icon": "HelpCircle",
       "category": "management",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "management"
@@ -2739,7 +2739,7 @@
       "icon": "Bell",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-10-25T09:40:22Z",
+      "updatedAt": "2026-11-14T20:17:53Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -3129,7 +3129,7 @@
       "icon": "Trophy",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -3515,7 +3515,7 @@
       "icon": "Users",
       "category": "gaming",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "gaming"
@@ -3836,7 +3836,7 @@
       "icon": "UserRound",
       "category": "integration",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "minecraft",
@@ -3912,7 +3912,7 @@
       "icon": "Gavel",
       "category": "gaming",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "gaming"
@@ -4482,7 +4482,7 @@
       "icon": "FileText",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -4885,7 +4885,7 @@
       "icon": "CreditCard",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-12T15:58:45Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -4968,7 +4968,7 @@
       "icon": "Bell",
       "category": "management",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "management"
@@ -5120,7 +5120,7 @@
       "icon": "Shield",
       "category": "management",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "management"
@@ -5362,7 +5362,7 @@
       "icon": "UserPlus",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-12T16:00:22Z",
+      "updatedAt": "2026-11-14T20:17:53Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -5675,7 +5675,7 @@
       "icon": "Server",
       "category": "gaming",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "gaming"
@@ -5753,7 +5753,7 @@
       "icon": "LayoutGrid",
       "category": "content",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "content"
@@ -5828,7 +5828,7 @@
       "icon": "Image",
       "category": "content",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "content"
@@ -6055,7 +6055,7 @@
       "icon": "Users",
       "category": "management",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-14T20:17:53Z",
       "screenshots": [],
       "tags": [
         "management"
@@ -6199,13 +6199,13 @@
           "description": "完整的电商功能，包括商品、分类、购物车和订单"
         }
       },
-      "version": "2.65.1",
+      "version": "2.66.0",
       "coreVersion": "^5.37.0",
       "author": "Blysis Team",
       "icon": "ShoppingBag",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-13T20:35:16Z",
+      "updatedAt": "2026-11-14T20:17:53Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -6414,7 +6414,7 @@
       "icon": "MessageSquare",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-10-26T10:34:40Z",
+      "updatedAt": "2026-11-14T20:17:53Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -6571,7 +6571,7 @@
       "icon": "Percent",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "commerce"
@@ -6653,7 +6653,7 @@
       "icon": "Ticket",
       "category": "management",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-14T20:17:53Z",
       "screenshots": [],
       "tags": [
         "management"
@@ -6808,7 +6808,7 @@
       "icon": "Trophy",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -7192,7 +7192,7 @@
       "icon": "Vote",
       "category": "gaming",
       "verified": true,
-      "updatedAt": "2026-11-12T09:51:06Z",
+      "updatedAt": "2026-11-12T16:58:56Z",
       "screenshots": [],
       "tags": [
         "gaming"
@@ -7348,7 +7348,7 @@
       "icon": "Dices",
       "category": "commerce",
       "verified": true,
-      "updatedAt": "2026-11-13T00:46:31Z",
+      "updatedAt": "2026-11-14T20:17:53Z",
       "screenshots": [],
       "tags": [
         "commerce"
