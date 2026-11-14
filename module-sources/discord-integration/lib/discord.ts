@@ -127,7 +127,9 @@ export async function postToWebhook(
         const res = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...payload, username: payload.username || "Blysis" }),
+            // No username unless the caller sets one: the name and avatar the operator gave the webhook in Discord
+            // are the site's own; a fixed fallback name here overrode them on every message.
+            body: JSON.stringify(payload),
         });
         if (res.ok) {
             await recordWebhookDelivery({ event: "discord.message", url, status: res.status, ok: true, detail: null });
