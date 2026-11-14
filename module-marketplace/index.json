@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "updated": "2026-11-14",
-  "updatedAt": "2026-11-14T09:44:11Z",
+  "updatedAt": "2026-11-14T14:09:34Z",
   "modules": [
     {
       "id": "announcements",
@@ -1633,13 +1633,13 @@
           "description": "Discord Webhook 通知和设置"
         }
       },
-      "version": "1.9.0",
+      "version": "1.9.1",
       "coreVersion": "^5.0.0",
       "author": "Blysis",
       "icon": "MessageSquare",
       "category": "integration",
       "verified": true,
-      "updatedAt": "2026-11-14T09:44:11Z",
+      "updatedAt": "2026-11-14T14:09:34Z",
       "screenshots": [],
       "tags": [
         "integration"
