@@ -2,6 +2,7 @@ import { log, prisma, recordWebhookDelivery } from "@/core/sdk/server";
 
 interface DiscordEmbed {
     title?: string;
+    url?: string;
     description?: string;
     color?: number;
     fields?: { name: string; value: string; inline?: boolean }[];
@@ -10,11 +11,30 @@ interface DiscordEmbed {
     thumbnail?: { url: string };
 }
 
-interface WebhookPayload {
+/**
+ * Who a message may ping. Discord pings nobody a message names unless this
+ * lets it, so `@here` in `content` with no `allowed_mentions` is plain text.
+ */
+export interface AllowedMentions {
+    parse: ("everyone" | "roles" | "users")[];
+    roles?: string[];
+    users?: string[];
+}
+
+export interface WebhookPayload {
     content?: string;
     embeds?: DiscordEmbed[];
     username?: string;
     avatar_url?: string;
+    allowed_mentions?: AllowedMentions;
+}
+
+export interface WebhookResult {
+    ok: boolean;
+    status: number;
+    detail: string | null;
+    /** The address it went to, so a follow-up lands in the same channel. */
+    url: string | null;
 }
 
 /**
@@ -33,7 +53,26 @@ interface WebhookPayload {
 export async function sendDiscordWebhook(
     eventType: string,
     payload: WebhookPayload
-): Promise<void> {
+): Promise<WebhookResult> {
+    const url = await resolveWebhookUrl(eventType);
+    if (!url) return { ok: false, status: 0, detail: null, url: null };
+
+    const sent = await postToWebhook(url, payload);
+    if (!sent.ok) {
+        // `fetch` does not throw on a 400, so this used to be silent: an embed
+        // the service refused looked exactly like one it took, and an operator
+        // found out by noticing the messages had stopped.
+        log.error("[Discord Webhook] Refused", { eventType, status: sent.status, detail: sent.detail });
+    }
+    return { ...sent, url };
+}
+
+/**
+ * Where an event's messages go: its own webhook, else the general one, else
+ * `DISCORD_WEBHOOK_URL`. Null when none is set or the one set is not one of
+ * the service's own addresses (a tampered value must not exfiltrate payloads).
+ */
+export async function resolveWebhookUrl(eventType: string): Promise<string | null> {
     const specificKey = `discord_webhook_${eventType.replace(/\./g, "_")}`;
     const generalKey = "discord_webhook_general";
 
@@ -55,31 +94,17 @@ export async function sendDiscordWebhook(
         }
     }
 
-    if (!url) return;
+    if (!url) return null;
 
     // Validate webhook domain - only post to official Discord hosts so a
     // tampered setting value can't be used to exfiltrate payloads (SSRF).
-    try {
-        const urlObj = new URL(url);
-        // Exact-or-subdomain match - endsWith("discord.com") alone would also
-        // accept "evildiscord.com" / "discord.com.attacker.test" (SSRF bypass).
-        const host = urlObj.hostname.toLowerCase().replace(/\.$/, "");
-        const onDiscord = ["discord.com", "discordapp.com"].some((d) => host === d || host.endsWith("." + d));
-        if (!onDiscord) {
-            log.warn("[Discord] Invalid webhook domain", { error: String(urlObj.hostname) });
-            return;
-        }
-    } catch {
-        return;
+    // Exact-or-subdomain match - endsWith("discord.com") alone would also
+    // accept "evildiscord.com" / "discord.com.attacker.test" (SSRF bypass).
+    if (!isDiscordWebhook(url)) {
+        log.warn("[Discord] Invalid webhook domain", { eventType });
+        return null;
     }
-
-    const sent = await postToWebhook(url, payload);
-    if (!sent.ok) {
-        // `fetch` does not throw on a 400, so this used to be silent: an embed
-        // the service refused looked exactly like one it took, and an operator
-        // found out by noticing the messages had stopped.
-        log.error("[Discord Webhook] Refused", { eventType, status: sent.status, detail: sent.detail });
-    }
+    return url;
 }
 
 /**

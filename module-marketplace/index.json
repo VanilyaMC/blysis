@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "updated": "2026-11-13",
-  "updatedAt": "2026-11-13T20:35:16Z",
+  "updated": "2026-11-14",
+  "updatedAt": "2026-11-14T09:44:11Z",
   "modules": [
     {
       "id": "announcements",
@@ -449,13 +449,13 @@
           "description": "版本说明与更新历史"
         }
       },
-      "version": "1.12.0",
+      "version": "1.13.0",
       "coreVersion": "^5.34.0",
       "author": "Blysis",
       "icon": "History",
       "category": "community",
       "verified": true,
-      "updatedAt": "2026-11-13T08:08:53Z",
+      "updatedAt": "2026-11-14T09:44:11Z",
       "screenshots": [],
       "tags": [
         "community"
@@ -1633,13 +1633,13 @@
           "description": "Discord Webhook 通知和设置"
         }
       },
-      "version": "1.8.1",
+      "version": "1.9.0",
       "coreVersion": "^5.0.0",
       "author": "Blysis",
       "icon": "MessageSquare",
       "category": "integration",
       "verified": true,
-      "updatedAt": "2026-10-23T20:06:35Z",
+      "updatedAt": "2026-11-14T09:44:11Z",
       "screenshots": [],
       "tags": [
         "integration"
@@ -1655,7 +1655,8 @@
           "forum.topic.created",
           "tickets.ticket.opened",
           "store.order.created",
-          "store.order.completed"
+          "store.order.completed",
+          "changelog.entry.published"
         ]
       },
       "stats": {

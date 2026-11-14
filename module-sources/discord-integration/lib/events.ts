@@ -21,6 +21,7 @@ export interface KnownEvent {
 export const KNOWN_EVENTS: KnownEvent[] = [
     { event: "user.registered", labelKey: "event_user_registered", placeholders: ["username", "email"] },
     { event: "blog.article.created", labelKey: "event_blog_article", placeholders: ["title", "author", "url"] },
+    { event: "changelog.entry.published", labelKey: "event_changelog_entry", placeholders: ["title", "version", "date", "excerpt", "url"] },
     { event: "forum.topic.created", labelKey: "event_forum_topic", placeholders: ["title", "author", "url"] },
     { event: "tickets.ticket.opened", labelKey: "event_ticket_opened", placeholders: ["subject", "username", "department"] },
     { event: "store.order.created", labelKey: "event_order_created", placeholders: ["orderNumber", "username", "total", "currency"] },

@@ -33,6 +33,10 @@ function postedEvents(): Set<string> {
         for (const match of source.matchAll(/sendDiscordWebhook\(\s*"([a-z0-9_]+)"/g)) {
             events.add(match[1]);
         }
+        // An announcement goes through `announce`, which routes it the same way.
+        for (const match of source.matchAll(/webhookKey:\s*"([a-z0-9_]+)"/g)) {
+            events.add(match[1]);
+        }
     }
     return events;
 }

@@ -35,6 +35,9 @@ const SAMPLES: Record<string, string> = {
     orderNumber: "ORD-EXAMPLE",
     total: "10.00",
     currency: "USD",
+    version: "1.0.0",
+    date: "2026-01-01",
+    excerpt: "A short example of what changed.",
 };
 
 export async function POST(request: NextRequest) {

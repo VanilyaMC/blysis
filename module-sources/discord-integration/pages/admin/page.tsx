@@ -5,19 +5,39 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useState } from "react";
 import { Link } from "@/core/sdk/navigation";
-import { Button, Card, CardContent, Input, Label, LoadFailed, buttonClassName } from "@/core/sdk/ui";
+import { Button, Card, CardContent, Input, Label, LoadFailed, NativeSelect, buttonClassName } from "@/core/sdk/ui";
 import { ArrowLeft, Loader2, Check, Send } from "lucide-react";
 import { AdminPageHeader, useSettingsLoad } from "@/core/sdk/admin";
 
-const webhookEvents = [
+interface WebhookEvent {
+    key: string;
+    labelKey: string;
+    descKey: string;
+    /** The setting for who it pings, for an announcement that may ping. */
+    mention?: string;
+}
+
+const webhookEvents: WebhookEvent[] = [
     { key: "discord_webhook_general", labelKey: "adm_evt_general", descKey: "adm_evt_general_desc" },
     { key: "discord_webhook_order_completed", labelKey: "adm_evt_orderCompleted", descKey: "adm_evt_orderCompleted_desc" },
     { key: "discord_webhook_order_created", labelKey: "adm_evt_orderCreated", descKey: "adm_evt_orderCreated_desc" },
     { key: "discord_webhook_ticket_created", labelKey: "adm_evt_ticketCreated", descKey: "adm_evt_ticketCreated_desc" },
     { key: "discord_webhook_user_registered", labelKey: "adm_evt_userRegistered", descKey: "adm_evt_userRegistered_desc" },
     { key: "discord_webhook_forum_topic_created", labelKey: "adm_evt_forumTopic", descKey: "adm_evt_forumTopic_desc" },
-    { key: "discord_webhook_blog_article_created", labelKey: "adm_evt_blogArticle", descKey: "adm_evt_blogArticle_desc" },
+    { key: "discord_webhook_blog_article_created", labelKey: "adm_evt_blogArticle", descKey: "adm_evt_blogArticle_desc", mention: "discord_mention_blog_article_created" },
+    { key: "discord_webhook_changelog_entry_published", labelKey: "adm_evt_changelogEntry", descKey: "adm_evt_changelogEntry_desc", mention: "discord_mention_changelog_entry_published" },
 ];
+
+/** The announcements that can ping somebody after they are posted. */
+const mentionKeys = webhookEvents.flatMap((event) => (event.mention ? [event.mention] : []));
+
+/** What the ping setting holds: nobody, `@here`, `@everyone`, or a role id. */
+type MentionKind = "none" | "here" | "everyone" | "role";
+
+function mentionKind(value: string): MentionKind {
+    if (value === "here" || value === "everyone") return value;
+    return /^\d+$/.test(value) ? "role" : "none";
+}
 
 /*
  * These keys are not decoration: `sendDiscordWebhook(event)` looks up
@@ -42,6 +62,9 @@ export default function DiscordSettingsPage() {
     const [error, setError] = useState<string | null>(null);
 
     const [webhooks, setWebhooks] = useState<Record<string, string>>({});
+    // Kept apart from the webhooks: a role picked with no id typed yet is a
+    // choice in progress, not "nobody", and must not snap back to it.
+    const [mentions, setMentions] = useState<Record<string, { kind: MentionKind; role: string }>>({});
 
     // Every webhook falls back to the empty string, so a failed read showed
     // a form of empty fields and saving it deleted every configured webhook.
@@ -51,7 +74,25 @@ export default function DiscordSettingsPage() {
             wh[event.key] = (s[event.key] as string) || "";
         }
         setWebhooks(wh);
+        const mn: Record<string, { kind: MentionKind; role: string }> = {};
+        for (const key of mentionKeys) {
+            const value = typeof s[key] === "string" ? (s[key] as string).trim() : "";
+            const kind = mentionKind(value);
+            mn[key] = { kind, role: kind === "role" ? value : "" };
+        }
+        setMentions(mn);
     });
+
+    /** The ping settings as stored: "", "here", "everyone" or a role id. */
+    const mentionSettings = (): Record<string, string> => {
+        const out: Record<string, string> = {};
+        for (const key of mentionKeys) {
+            const choice = mentions[key] ?? { kind: "none", role: "" };
+            const role = choice.role.trim();
+            out[key] = choice.kind === "role" ? (/^\d{17,20}$/.test(role) ? role : "") : choice.kind === "none" ? "" : choice.kind;
+        }
+        return out;
+    };
 
     const handleSave = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -63,7 +104,7 @@ export default function DiscordSettingsPage() {
             const res = await fetch("/api/v1/settings", {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(webhooks),
+                body: JSON.stringify({ ...webhooks, ...mentionSettings() }),
             });
 
             if (!res.ok) {
@@ -173,6 +214,43 @@ export default function DiscordSettingsPage() {
                                             onChange={(e) => setWebhooks({ ...webhooks, [event.key]: e.target.value })}
                                             placeholder="https://discord.com/api/webhooks/..."
                                         />
+                                        {event.mention && (
+                                            <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                                                <div>
+                                                    <Label className="text-xs">{t("adm_mention")}</Label>
+                                                    <NativeSelect
+                                                        aria-label={t("adm_mention")}
+                                                        className="w-full"
+                                                        value={mentions[event.mention as string]?.kind ?? "none"}
+                                                        onChange={(e) => setMentions({
+                                                            ...mentions,
+                                                            [event.mention as string]: { kind: e.target.value as MentionKind, role: mentions[event.mention as string]?.role ?? "" },
+                                                        })}
+                                                    >
+                                                        <option value="none">{t("adm_mention_none")}</option>
+                                                        <option value="here">@here</option>
+                                                        <option value="everyone">@everyone</option>
+                                                        <option value="role">{t("adm_mention_role")}</option>
+                                                    </NativeSelect>
+                                                </div>
+                                                {mentions[event.mention as string]?.kind === "role" && (
+                                                    <div>
+                                                        <Label className="text-xs">{t("adm_mention_roleId")}</Label>
+                                                        <Input
+                                                            aria-label={t("adm_mention_roleId")}
+                                                            inputMode="numeric"
+                                                            value={mentions[event.mention as string]?.role ?? ""}
+                                                            onChange={(e) => setMentions({
+                                                                ...mentions,
+                                                                [event.mention as string]: { kind: "role", role: e.target.value.replace(/\D/g, "") },
+                                                            })}
+                                                            placeholder="123456789012345678"
+                                                        />
+                                                    </div>
+                                                )}
+                                                <p className="text-xs text-muted-foreground sm:col-span-2">{t("adm_mention_desc")}</p>
+                                            </div>
+                                        )}
                                     </div>
                                     {webhooks[event.key] && (
                                         <Button
