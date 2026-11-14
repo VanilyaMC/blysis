@@ -5,6 +5,7 @@ import { z } from "zod";
 import { ENTRY_TEXT, TRANSLATED_FIELDS, entrySlug } from "../lib/entry-page";
 import { RELEASED_ON } from "../lib/released-on";
 import { readChangelogEntries } from "../lib/read-entries";
+import { announceIfPublic } from "../lib/announce";
 
 // The read and what counts as published live in lib/read-entries.ts, because
 // the page renders the timeline on the server now and the two must not
@@ -76,9 +77,10 @@ export async function POST(request: NextRequest) {
         return created;
     });
 
-    // Fire hook for cross-module reactions
-    const { doActionAsync } = await import("@/core/sdk");
-    await doActionAsync("changelog.entry.published", entry);
+    // `changelog.entry.published` means a reader can see it now: fired here
+    // for an entry that is out on create, and by the edit or the cron that
+    // brings a switched-off or scheduled one out later - once either way.
+    await announceIfPublic(entry.id);
 
     // Public activity feed entry
     await prisma.activityFeedItem.create({

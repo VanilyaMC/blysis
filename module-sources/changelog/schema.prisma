@@ -53,6 +53,9 @@ model ChangelogEntry {
   color     String?  @default("#3b82f6")
   isActive  Boolean  @default(true)
   publishAt DateTime?
+  /// When the release was announced (`changelog.entry.published`): the first
+  /// moment a reader could see it. Set once, so it is announced once.
+  announcedAt DateTime?
   createdAt DateTime @default(now())
 
   @@index([slug])

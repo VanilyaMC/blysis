@@ -4,6 +4,7 @@ import { auth } from "@/core/sdk/auth";
 import { z } from "zod";
 import { ENTRY_TEXT, TRANSLATED_FIELDS, entrySlug } from "../../lib/entry-page";
 import { RELEASED_ON } from "../../lib/released-on";
+import { announceIfPublic } from "../../lib/announce";
 
 type RouteParams = { params: Promise<{ id: string }> };
 
@@ -75,6 +76,9 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
 
     const { doActionAsync } = await import("@/core/sdk");
     await doActionAsync("changelog.entry.updated", entry);
+    // The edit that switches a release on, or clears the hour it was waiting
+    // for, is the moment it goes out. Announced once, whatever came before.
+    await announceIfPublic(id);
 
     return NextResponse.json({ entry });
 }
