@@ -10,7 +10,7 @@ import { Label } from "@/core/components/ui/label";
 import { Loader2, Check } from "lucide-react";
 import { NativeSelect } from "@/core/components/ui/native-select";
 import { HASH_ALGORITHMS, type HashAlgorithm } from "@/core/lib/hash-algorithms";
-import { USERNAME_RULES, type UsernameRule } from "@/core/lib/registration-rules";
+import { USERNAME_PREFIXES, USERNAME_RULES, type UsernamePrefix, type UsernameRule } from "@/core/lib/registration-rules";
 import { toast } from "sonner";
 import { AdminPageHeader } from "@/core/components/admin/AdminPageHeader";
 import { LoadFailed } from "@/core/components/ui/load-failed";
@@ -69,6 +69,13 @@ const USERNAME_RULE_LABELS: Record<UsernameRule, string> = {
 
 const HASH_CHOICES = HASH_ALGORITHMS.map((value) => ({ value, labelKey: HASH_LABELS[value] }));
 const USERNAME_RULE_CHOICES = USERNAME_RULES.map((value) => ({ value, labelKey: USERNAME_RULE_LABELS[value] }));
+
+const USERNAME_PREFIX_LABELS: Record<UsernamePrefix, string> = {
+    none: "generalSettings_usernamePrefix_none",
+    dot: "generalSettings_usernamePrefix_dot",
+};
+
+const USERNAME_PREFIX_CHOICES = USERNAME_PREFIXES.map((value) => ({ value, labelKey: USERNAME_PREFIX_LABELS[value] }));
 
 /**
  * Written as a choice rather than a switch because that is the control this
@@ -205,6 +212,7 @@ const sections: SectionDef[] = [
         titleKey: "generalSettings_registration",
         fields: [
             { key: "username_rule", labelKey: "generalSettings_usernameRule", type: "choice", defaultValue: "default", choices: USERNAME_RULE_CHOICES, descriptionKey: "generalSettings_usernameRuleHint" },
+            { key: "username_prefix", labelKey: "generalSettings_usernamePrefix", type: "choice", defaultValue: "none", choices: USERNAME_PREFIX_CHOICES, descriptionKey: "generalSettings_usernamePrefixHint" },
             { key: "username_min_length", labelKey: "generalSettings_usernameMinLength", type: "number", defaultValue: 3 },
             { key: "registration_daily_cap", labelKey: "generalSettings_registrationDailyCap", type: "number", defaultValue: 0, descriptionKey: "generalSettings_registrationCapHint" },
             { key: "registration_total_cap", labelKey: "generalSettings_registrationTotalCap", type: "number", defaultValue: 0 },

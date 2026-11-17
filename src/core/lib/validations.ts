@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { isPictureAddress } from "./picture-address";
 import { checkPasswordPolicy, PASSWORD_POLICY } from "./password-policy";
+import { USERNAME_SHAPE } from "./registration-rules";
 
 // ==================== AUTH SCHEMAS ====================
 
@@ -25,10 +26,9 @@ export const registerSchema = z.object({
         .string()
         .min(3, "Username must be at least 3 characters")
         .max(20, "Username must be at most 20 characters")
-        .regex(
-            /^[a-zA-Z0-9_]+$/,
-            "Username can only contain letters, numbers, and underscores"
-        ),
+        // The widest shape any site allows; the route narrows it to this
+        // site's rule and prefix with `checkUsername`.
+        .regex(USERNAME_SHAPE, "Username can only contain letters, numbers, and underscores"),
     password: newPasswordSchema,
     confirmPassword: z.string(),
 }).refine((data) => data.password === data.confirmPassword, {
@@ -43,10 +43,7 @@ export const updateUserSchema = z.object({
         .string()
         .min(3, "Username must be at least 3 characters")
         .max(20, "Username must be at most 20 characters")
-        .regex(
-            /^[a-zA-Z0-9_]+$/,
-            "Username can only contain letters, numbers, and underscores"
-        )
+        .regex(USERNAME_SHAPE, "Username can only contain letters, numbers, and underscores")
         .optional(),
     /**
      * The address the account answers to. Accepted here, but never written

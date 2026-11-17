@@ -23,6 +23,18 @@ export function isStaticAsset(pathname: string): boolean {
     return (
         pathname.startsWith("/_next") ||
         pathname.startsWith("/_vercel") ||
-        pathname.includes(".")
+        pathname.startsWith("/.well-known/") ||
+        looksLikeAFile(pathname)
     );
+}
+
+/**
+ * A file has its dot after the first character of the last segment, as in
+ * `logo.png`. A dot that opens the segment is part of a name: a site may let
+ * usernames start with one, and `/u/.Steve` is that member's page, which
+ * every gate has to see. The proxy's matcher draws the same line.
+ */
+function looksLikeAFile(pathname: string): boolean {
+    const last = pathname.slice(pathname.lastIndexOf("/") + 1);
+    return last.indexOf(".", 1) !== -1;
 }

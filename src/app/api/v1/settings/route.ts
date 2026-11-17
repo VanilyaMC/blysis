@@ -71,6 +71,7 @@ const PER_KEY_LIMITS: Record<string, number> = {
     password_hash_algorithm: 16,
     legacy_password_hashes: 8,
     username_rule: 32,
+    username_prefix: 16,
     currency: 16,
     currency_symbol: 8,
 };

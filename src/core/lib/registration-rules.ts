@@ -44,20 +44,58 @@ export function isUsernameRule(value: unknown): value is UsernameRule {
     return typeof value === "string" && (USERNAME_RULES as readonly string[]).includes(value);
 }
 
+/**
+ * One character a name may start with, on top of whichever rule is chosen.
+ *
+ * A game network that lets Bedrock players in through Floodgate gives each
+ * of them a prefixed name - ".Steve" by default - so a site whose usernames
+ * are player names had no way to hold that player's account under the name
+ * the game knows them by. This is not a fourth, wider rule: the rule still
+ * judges every character after the prefix, the prefix is one fixed character
+ * picked from this list rather than typed, and only the first position may
+ * hold it. Off unless an operator turns it on.
+ */
+export const USERNAME_PREFIXES = ["none", "dot"] as const;
+export type UsernamePrefix = (typeof USERNAME_PREFIXES)[number];
+
+export const DEFAULT_USERNAME_PREFIX: UsernamePrefix = "none";
+
+const PREFIX_CHARACTER: Record<UsernamePrefix, string | null> = {
+    none: null,
+    dot: ".",
+};
+
+export function isUsernamePrefix(value: unknown): value is UsernamePrefix {
+    return typeof value === "string" && (USERNAME_PREFIXES as readonly string[]).includes(value);
+}
+
+/**
+ * The widest shape any combination of rule and prefix can accept: the default
+ * rule with any prefix in front. Schemas that run before the setting is read
+ * bound a name by this; `checkUsername` then narrows it to what the site
+ * actually allows, so every route that takes a name has to call it.
+ */
+export const USERNAME_SHAPE = /^\.?[a-zA-Z0-9_]+$/;
+
 export type UsernameRefusal = "too_short" | "too_long" | "charset";
 
 export function checkUsername(
     name: string,
     rule: UsernameRule,
     minLength: number,
+    prefix: UsernamePrefix = DEFAULT_USERNAME_PREFIX,
 ): { ok: true } | { ok: false; reason: UsernameRefusal } {
     // The operator's minimum may raise core's and never lower it, so a stored
     // row holding 1 is read as the built-in 3.
     const floor = Math.max(USERNAME_MIN_LENGTH, Number.isFinite(minLength) ? Math.floor(minLength) : 0);
 
+    // The prefix counts toward both lengths: the column and every place that
+    // shows a name hold the whole of it.
     if (name.length < floor) return { ok: false, reason: "too_short" };
     if (name.length > USERNAME_MAX_LENGTH) return { ok: false, reason: "too_long" };
-    if (!(CHARSET[rule] ?? CHARSET.default).test(name)) return { ok: false, reason: "charset" };
+    const lead = PREFIX_CHARACTER[prefix] ?? null;
+    const rest = lead !== null && name.startsWith(lead) ? name.slice(lead.length) : name;
+    if (!(CHARSET[rule] ?? CHARSET.default).test(rest)) return { ok: false, reason: "charset" };
     return { ok: true };
 }
 

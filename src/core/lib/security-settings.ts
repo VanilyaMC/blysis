@@ -16,9 +16,12 @@ import { prisma } from "./db";
 import { DEFAULT_ALGORITHM, isHashAlgorithm, type HashAlgorithm } from "./hash-algorithms";
 import { PASSWORD_POLICY, checkPasswordPolicy, type PasswordCheck } from "./password-policy";
 import {
+    DEFAULT_USERNAME_PREFIX,
     DEFAULT_USERNAME_RULE,
+    isUsernamePrefix,
     isUsernameRule,
     type RegistrationCaps,
+    type UsernamePrefix,
     type UsernameRule,
 } from "./registration-rules";
 
@@ -34,6 +37,7 @@ const SETTING_KEYS = {
     legacyPasswordHashes: "legacy_password_hashes",
     usernameRule: "username_rule",
     usernameMinLength: "username_min_length",
+    usernamePrefix: "username_prefix",
     registrationDailyCap: "registration_daily_cap",
     registrationTotalCap: "registration_total_cap",
 } as const;
@@ -257,13 +261,21 @@ export async function legacyPasswordHashesAccepted(): Promise<boolean> {
     return raw === true || raw === "true";
 }
 
-/** The username rule an operator picked, or core's own. */
-export async function getUsernameRule(): Promise<{ rule: UsernameRule; minLength: number }> {
-    const [raw, min] = await Promise.all([
+/**
+ * The username rule an operator picked, or core's own, with the prefix a name
+ * may start with. A row naming no known prefix reads as none.
+ */
+export async function getUsernameRule(): Promise<{ rule: UsernameRule; minLength: number; prefix: UsernamePrefix }> {
+    const [raw, min, rawPrefix] = await Promise.all([
         readSetting(SETTING_KEYS.usernameRule),
         getBounded(USERNAME_MIN),
+        readSetting(SETTING_KEYS.usernamePrefix),
     ]);
-    return { rule: isUsernameRule(raw) ? raw : DEFAULT_USERNAME_RULE, minLength: min };
+    return {
+        rule: isUsernameRule(raw) ? raw : DEFAULT_USERNAME_RULE,
+        minLength: min,
+        prefix: isUsernamePrefix(rawPrefix) ? rawPrefix : DEFAULT_USERNAME_PREFIX,
+    };
 }
 
 export async function getRegistrationCaps(): Promise<RegistrationCaps> {

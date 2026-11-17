@@ -41,6 +41,14 @@ describe("isStaticAsset", () => {
         expect(isStaticAsset("/en/store")).toBe(false);
         expect(isStaticAsset("/en/admin/settings")).toBe(false);
     });
+
+    it("treats a page named for a username that starts with a dot as a page", () => {
+        expect(isStaticAsset("/tr/u/.Steve")).toBe(false);
+        expect(isStaticAsset("/u/.Steve")).toBe(false);
+        expect(isStaticAsset("/tr/u/.Steve/content")).toBe(false);
+        expect(isStaticAsset("/.well-known/acme-challenge/token")).toBe(true);
+        expect(isStaticAsset("/.well-known/security.txt")).toBe(true);
+    });
 });
 
 /**
@@ -71,5 +79,17 @@ describe("proxy matcher", () => {
         // proxy would never run for it.
         expect(asRegex.test("/api/v1/store/products/1.")).toBe(false);
         expect(asRegex.test("/logo.png")).toBe(false);
+        expect(asRegex.test("/uploads/avatars/3.webp")).toBe(false);
+        expect(asRegex.test("/_next/static/chunks/main.js")).toBe(false);
+        expect(asRegex.test("/.well-known/acme-challenge/token")).toBe(false);
+    });
+
+    it("sends a page named for a username that starts with a dot through the proxy", () => {
+        const line = matcherBlock.split("\n").find((l) => l.includes("'/(("));
+        const pattern = line!.slice(line!.indexOf("'") + 1, line!.lastIndexOf("'"));
+        const asRegex = new RegExp("^" + pattern.replace(/\\\\/g, "\\") + "$");
+        expect(asRegex.test("/tr/u/.Steve")).toBe(true);
+        expect(asRegex.test("/u/.Steve")).toBe(true);
+        expect(asRegex.test("/tr/u/.Steve/content")).toBe(true);
     });
 });

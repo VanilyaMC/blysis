@@ -3,7 +3,8 @@ import { ensureHooks } from "@/core/lib/hooks-bootstrap";
 import { auth } from "@/core/lib/auth";
 import { prisma } from "@/core/lib/db";
 import { rateLimit } from "@/core/lib/rate-limit";
-import { enforcePasswordPolicy } from "@/core/lib/security-settings";
+import { enforcePasswordPolicy, getUsernameRule } from "@/core/lib/security-settings";
+import { checkUsername } from "@/core/lib/registration-rules";
 import { updateUserSchema, updatePasswordSchema } from "@/core/lib/validations";
 import { hashPassword, verifyPassword } from "@/core/lib/password-hash";
 import { readSettingValues } from "@/core/lib/setting-values";
@@ -189,6 +190,23 @@ export async function PATCH(request: NextRequest) {
                 { error: "Username changes are closed", code: "username_changes_closed" },
                 { status: 403 },
             );
+        }
+        // A name the account already holds is left alone, so a member whose
+        // name predates the site's rule can still save the rest of the form.
+        // A new name meets the same rule and prefix a registration does.
+        const current = await prisma.user.findUnique({
+            where: { id: session.user.id },
+            select: { username: true },
+        });
+        if (validation.data.username !== current?.username) {
+            const naming = await getUsernameRule();
+            const named = checkUsername(validation.data.username, naming.rule, naming.minLength, naming.prefix);
+            if (!named.ok && named.reason === "too_short") {
+                return NextResponse.json({ error: "That username is too short", code: "username_too_short" }, { status: 400 });
+            }
+            if (!named.ok) {
+                return NextResponse.json({ error: "That username is not allowed here", code: "username_not_allowed" }, { status: 400 });
+            }
         }
         if (await usernameTaken(validation.data.username, session.user.id)) {
             return NextResponse.json({ error: "Username already taken", code: "username_taken" }, { status: 400 });

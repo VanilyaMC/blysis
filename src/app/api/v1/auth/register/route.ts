@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
         // narrower than what `registerSchema` already accepted, so anything
         // reaching here has passed both.
         const naming = await getUsernameRule();
-        const named = checkUsername(username, naming.rule, naming.minLength);
+        const named = checkUsername(username, naming.rule, naming.minLength, naming.prefix);
         // Two literal codes rather than one built from the reason: a code a
         // client cannot predict is a code no screen can put into a sentence.
         if (!named.ok && named.reason === "too_short") {
