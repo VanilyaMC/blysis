@@ -7,6 +7,9 @@ import { isAdmin } from "@/core/lib/permissions";
 import { logActivity } from "@/core/lib/activity-log";
 import { readJsonBody } from "@/core/lib/api-body";
 import { usernameTaken } from "@/core/lib/username-taken";
+import { USERNAME_MAX_LENGTH, USERNAME_MIN_LENGTH } from "@/core/lib/constants";
+import { USERNAME_SHAPE, checkUsername } from "@/core/lib/registration-rules";
+import { getUsernameRule } from "@/core/lib/security-settings";
 import { z } from "zod";
 
 /**
@@ -16,7 +19,7 @@ import { z } from "zod";
  */
 const adminUpdateUserSchema = z.object({
     roleId: z.string().max(64).optional(),
-    username: z.string().min(3).max(20).regex(/^[a-zA-Z0-9_]+$/).optional(),
+    username: z.string().min(USERNAME_MIN_LENGTH).max(USERNAME_MAX_LENGTH).regex(USERNAME_SHAPE).optional(),
     email: z.string().email().max(254).optional(),
     isBanned: z.boolean().optional(),
     banReason: z.string().max(500).optional().nullable(),
@@ -121,6 +124,13 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
         }
 
         if (fields.username) {
+            // An admin is not held to the narrower rule a member picks from,
+            // but a prefix is only a name's first character where the site
+            // turned one on.
+            const naming = await getUsernameRule();
+            if (fields.username !== existing.username && !checkUsername(fields.username, "default", USERNAME_MIN_LENGTH, naming.prefix).ok) {
+                return NextResponse.json({ error: "That username is not allowed here", code: "username_not_allowed" }, { status: 400 });
+            }
             if (await usernameTaken(fields.username, id)) {
                 return NextResponse.json({ error: "Username already taken", code: "username_taken" }, { status: 409 });
             }

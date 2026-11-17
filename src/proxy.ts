@@ -497,8 +497,11 @@ export async function proxy(request: NextRequest) {
 export const config = {
     matcher: [
         // Pages and everything else, minus Next internals and anything that
-        // looks like a file in /public.
-        '/((?!api|_next|_vercel|.*\\..*).*)',
+        // looks like a file in /public: a last segment with a dot after its
+        // first character. A dot that opens the segment is a name, not an
+        // extension (a username may start with one, so `/u/.Steve` is a
+        // page), and `isStaticAsset` draws the same line.
+        '/((?!api|_next|_vercel|\\.well-known|.*/[^/.][^/]*\\.[^/]*$|[^/.][^/]*\\.[^/]*$).*)',
         // API routes unconditionally. The pattern above drops any path
         // containing a dot, and an API id is allowed to contain one, so
         // `DELETE /api/v1/store/products/1.` used to reach the handler
