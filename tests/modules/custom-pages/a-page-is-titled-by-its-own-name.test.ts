@@ -9,7 +9,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 const findFirst = vi.fn();
-vi.mock("@/core/sdk/server", () => ({ prisma: { customPage: { findFirst } } }));
+// No translation stored: the resolver reads each row back as written.
+vi.mock("@/core/sdk/server", () => ({
+    prisma: { customPage: { findFirst } },
+    translateContent: async (_client: unknown, _kind: string, rows: unknown[]) => rows,
+}));
 
 const { default: customPageExists } = await import("@/modules/custom-pages/lib/route-exists");
 
@@ -18,18 +22,18 @@ describe("the custom page resolver", () => {
 
     it("names the page it found", async () => {
         findFirst.mockResolvedValue({ id: "p1", title: "Server Rules" });
-        expect(await customPageExists({ slug: "rules" })).toEqual({ title: "Server Rules" });
+        expect(await customPageExists({ slug: "rules" }, { locale: "en" })).toEqual({ title: "Server Rules" });
         expect(findFirst.mock.calls[0][0].select).toEqual({ id: true, title: true });
     });
 
     it("answers no for a page that is not there or not published", async () => {
         findFirst.mockResolvedValue(null);
-        expect(await customPageExists({ slug: "nope" })).toBe(false);
+        expect(await customPageExists({ slug: "nope" }, { locale: "en" })).toBe(false);
         expect(findFirst.mock.calls[0][0].where).toEqual({ OR: [{ slug: "nope" }, { id: "nope" }], isActive: true });
     });
 
     it("asks nothing for an empty slug", async () => {
-        expect(await customPageExists({})).toBe(false);
+        expect(await customPageExists({}, { locale: "en" })).toBe(false);
         expect(findFirst).not.toHaveBeenCalled();
     });
 });
